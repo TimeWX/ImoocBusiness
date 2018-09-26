@@ -9,9 +9,11 @@ import android.support.v4.content.ContextCompat;
 
 import cn.com.megait.imoocbusiness.constant.Constant;
 
+
 /**
  * @author TimeW
  * @function 所有Fragment基类, 权限的申请, 判断
+ * @date 2018/9/25
  */
 public class BaseFragment extends Fragment {
 
