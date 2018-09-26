@@ -6,6 +6,8 @@
 
     <!-- Default screen margins, per the Android Design guidelines. -->
     <color name="color_333333">#333333</color>
+    <color name="color_ffffff">#ffffff</color>
+    <color name="color_000000">#000000</color>
     <color name="color_cccccc">#cccccc</color>
     <color name="color_fed952">#fed952</color>
     <color name="color_666666">#666666</color>

@@ -1,6 +1,6 @@
 package cn.com.megait.imoocbusiness.view.fragment.home;
 
-import android.support.v4.app.Fragment;
+import cn.com.megait.imoocbusiness.view.fragment.BaseFragment;
 
-public class MineFragment extends Fragment {
+public class MineFragment extends BaseFragment {
 }

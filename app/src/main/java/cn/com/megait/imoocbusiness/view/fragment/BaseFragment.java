@@ -1,5 +1,6 @@
 package cn.com.megait.imoocbusiness.view.fragment;
 
+import android.app.Activity;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.support.annotation.NonNull;
@@ -13,6 +14,8 @@ import cn.com.megait.imoocbusiness.constant.Constant;
  * @function 所有Fragment基类, 权限的申请, 判断
  */
 public class BaseFragment extends Fragment {
+
+    protected Activity mContext;
 
     /**
      * 申请指定权限
