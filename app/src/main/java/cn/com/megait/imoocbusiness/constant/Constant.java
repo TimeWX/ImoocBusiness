@@ -19,4 +19,8 @@ public class Constant {
             .concat("/imooc_business/photo");
     public static final String APP_FILE_DIR=Environment.getExternalStorageDirectory().getAbsolutePath()
             .concat("/imooc_business/file");
+
+
+    //腾讯QQ应用包名
+    public static final String TENCENT_QQ_PACKGAE_NAME="com.tencent.mobileqq";
 }

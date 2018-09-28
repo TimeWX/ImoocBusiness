@@ -25,7 +25,7 @@ public class BaseFragment extends Fragment {
      * @param code
      * @param permissions
      */
-    public void requestPermission(int code, String... permissions) {
+    public void applyForPermission(int code, String... permissions) {
         if (Build.VERSION.SDK_INT >= 23) {
             requestPermissions(permissions, code);
         }

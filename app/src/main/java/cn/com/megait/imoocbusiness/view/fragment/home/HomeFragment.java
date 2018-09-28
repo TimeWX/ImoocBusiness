@@ -15,6 +15,8 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
 import cn.com.megait.imoocbusiness.R;
+import cn.com.megait.imoocbusiness.constant.Constant;
+import cn.com.megait.imoocbusiness.util.Util;
 import cn.com.megait.imoocbusiness.view.fragment.BaseFragment;
 
 public class HomeFragment extends BaseFragment {
@@ -54,10 +56,20 @@ public class HomeFragment extends BaseFragment {
     @OnClick({R.id.qrcode_view, R.id.category_view, R.id.search_view})
     public void onViewClicked(View view) {
         switch (view.getId()) {
+            //扫一扫
             case R.id.qrcode_view:
+                if(hasPermission(Constant.HARDWARE_CAMERA_PERMISSION)){
+                    doOpenCamera();
+                }else{
+                    applyForPermission(Constant.HARDWARE_CAMERA_CODE,Constant.HARDWARE_CAMERA_PERMISSION);
+                }
                 break;
+            //目录
             case R.id.category_view:
+                //与48038614用户进行QQ对话
+                Util.skipToQQChat(mContext,"48038614");
                 break;
+            //搜索
             case R.id.search_view:
                 break;
         }
