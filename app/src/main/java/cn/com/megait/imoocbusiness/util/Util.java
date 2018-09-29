@@ -16,8 +16,13 @@ import cn.com.megait.imoocbusiness.constant.Constant;
 public class Util {
 
 
+    /**
+     * 跳转到QQ对话
+     * @param context
+     * @param qqNum
+     */
     public static void skipToQQChat(Context context,String qqNum) {
-        Uri uri = createQQUrl(qqNum);
+        Uri uri = createQQUri(qqNum);
         //检测是否安装QQ
         if(checkAPKExist(context,Constant.TENCENT_QQ_PACKGAE_NAME)){
             Intent intent=new Intent(Intent.ACTION_VIEW,uri);
@@ -28,7 +33,12 @@ public class Util {
         }
     }
 
-    private static Uri createQQUrl(String qqNum) {
+    /**
+     * 创建QQ Uri地址
+     * @param qqNum
+     * @return
+     */
+    private static Uri createQQUri(String qqNum) {
         String result = "mqqwpa://im/chat?chat_type=wpa&uin=" + qqNum + "&version=1";
         Uri uri = Uri.parse(result);
         return uri;
