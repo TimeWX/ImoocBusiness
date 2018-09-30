@@ -2,6 +2,7 @@ package cn.com.megait.imoocbusiness.util;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.widget.Toast;
@@ -34,6 +35,40 @@ public class Util {
     }
 
     /**
+     * 获取版本号
+     * @param context
+     * @return
+     */
+    public static String getVersionName(Context context){
+        String versionName="1.0.0";
+        PackageManager packageManager=context.getPackageManager();
+        try {
+            PackageInfo packageInfo = packageManager.getPackageInfo(context.getPackageName(), 0);
+            versionName=packageInfo.versionName;
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
+        return versionName;
+    }
+
+    /**
+     * 获取版本
+     * @param context
+     * @return
+     */
+    public static int getVersionCode(Context context){
+        int versionCode=1;
+        PackageManager packageManager=context.getPackageManager();
+        try {
+            PackageInfo packageInfo = packageManager.getPackageInfo(context.getPackageName(), 0);
+            versionCode=packageInfo.versionCode;
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
+        return  versionCode;
+    }
+
+    /**
      * 创建QQ Uri地址
      * @param qqNum
      * @return
@@ -45,6 +80,12 @@ public class Util {
     }
 
 
+    /**
+     * 检查应用是否存在
+     * @param context
+     * @param packageName 应用包名
+     * @return
+     */
     private static boolean checkAPKExist(Context context, String packageName) {
         if (packageName == null || "".equals(packageName.trim())) {
             return false;

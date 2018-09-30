@@ -76,6 +76,13 @@ public class SearchActivity extends BaseActivity {
         super.onCreate(savedInstanceState, persistentState);
         setContentView(R.layout.activity_search_layout);
         ButterKnife.bind(this);
+        initWidget();
+    }
+
+    /**
+     * 初始
+     */
+    private void initWidget() {
     }
 
     @Override
