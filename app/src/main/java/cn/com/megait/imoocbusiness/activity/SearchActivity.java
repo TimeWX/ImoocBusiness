@@ -3,8 +3,11 @@ package cn.com.megait.imoocbusiness.activity;
 import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.support.annotation.Nullable;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
-import android.widget.ImageView;
+import android.widget.AdapterView;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -22,17 +25,17 @@ import cn.com.megait.imoocbusiness.module.search.GoodsModel;
 
 /**
  * @author TimeW
- * @function
+ * @function 搜索界面,提供商品搜索
  * @date 2018/9/29
  */
-public class SearchActivity extends BaseActivity {
+public class SearchActivity extends BaseActivity implements AdapterView.OnItemClickListener {
     /**
      * 公共UI
      */
     @BindView(R.id.cancel_view)
     TextView cancelView;
-    @BindView(R.id.search_view)
-    ImageView searchView;
+    @BindView(R.id.goods_input_view)
+    EditText goodsInputView;
 
     /**
      * 历史相关UI
@@ -79,10 +82,43 @@ public class SearchActivity extends BaseActivity {
         initWidget();
     }
 
+    private TextWatcher textWatcher=new TextWatcher() {
+        @Override
+        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+        }
+
+        @Override
+        public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+        }
+
+        @Override
+        public void afterTextChanged(Editable s) {
+            String selections=goodsInputView.getText().toString();
+            if(selections!=null && !selections.trim().equals("")){
+
+            }
+
+        }
+    };
+
+    private int getHistoryData(){
+
+        return 0;
+    }
+
     /**
-     * 初始
+     * 初始化控件
      */
     private void initWidget() {
+        goodsListView.setEmptyView(goodsSearchEmptyLayout);
+        goodsListView.setOnItemClickListener(this);
+        goodsInputView.addTextChangedListener(textWatcher);
+        decideWhichMode();
+    }
+
+    private void decideWhichMode() {
     }
 
     @Override
@@ -102,5 +138,10 @@ public class SearchActivity extends BaseActivity {
             case R.id.goods_list_view:
                 break;
         }
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
     }
 }
