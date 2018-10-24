@@ -27,13 +27,13 @@ public class DBHelper extends SQLiteOpenHelper {
      */
     private static final String INTEGER_TYPE = " integer";//整型
     private static final String TEXT_TYPE = " TEXT";//文本
-    private static final String DESC = " DESC";//降序
+    public static final String DESC = " DESC";//降序
 
     /**
      * 表公共字段
      */
-    private static final String ID = "_id";
-    private static final String TIME = "time";
+    public static final String ID = "_id";
+    public static final String TIME = "time";
 
     /**
      * 货物记录表

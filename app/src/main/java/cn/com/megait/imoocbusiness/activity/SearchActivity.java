@@ -12,7 +12,7 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import java.util.List;
+import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -20,12 +20,14 @@ import butterknife.OnClick;
 import cn.com.megait.imoocbusiness.R;
 import cn.com.megait.imoocbusiness.activity.base.BaseActivity;
 import cn.com.megait.imoocbusiness.adapter.SearchAdapter;
+import cn.com.megait.imoocbusiness.db.database.DBDataHelper;
+import cn.com.megait.imoocbusiness.db.database.DBHelper;
 import cn.com.megait.imoocbusiness.module.BaseModel;
 import cn.com.megait.imoocbusiness.module.search.GoodsModel;
 
 /**
  * @author TimeW
- * @function 搜索界面,提供商品搜索
+ * @function 搜索界面, 提供商品搜索
  * @date 2018/9/29
  */
 public class SearchActivity extends BaseActivity implements AdapterView.OnItemClickListener {
@@ -70,8 +72,8 @@ public class SearchActivity extends BaseActivity implements AdapterView.OnItemCl
      */
     private SearchAdapter historyAdapter;
     private SearchAdapter searchAdapter;
-    private List<BaseModel> historyListDatas;
-    private List<BaseModel> searchingListDatas;
+    private ArrayList<BaseModel> historyListDatas;
+    private ArrayList<BaseModel> searchingListDatas;
     private GoodsModel goodsModel;
 
     @Override
@@ -82,7 +84,7 @@ public class SearchActivity extends BaseActivity implements AdapterView.OnItemCl
         initWidget();
     }
 
-    private TextWatcher textWatcher=new TextWatcher() {
+    private TextWatcher textWatcher = new TextWatcher() {
         @Override
         public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
@@ -95,17 +97,57 @@ public class SearchActivity extends BaseActivity implements AdapterView.OnItemCl
 
         @Override
         public void afterTextChanged(Editable s) {
-            String selections=goodsInputView.getText().toString();
-            if(selections!=null && !selections.trim().equals("")){
+            String selections = goodsInputView.getText().toString();
+            if (selections != null && !selections.trim().equals("")) {
 
             }
 
         }
     };
 
-    private int getHistoryData(){
+    /**
+     * 进入搜索模式
+     */
+    private void entrySearchMode() {
+        goodsHistoryLayout.setVisibility(View.GONE);
+        emptyLayout.setVisibility(View.GONE);
+        goodsSearchLayout.setVisibility(View.VISIBLE);
+    }
 
-        return 0;
+    /**
+     * 进入空模式,删除历史表
+     */
+    private void entryEmptyMode() {
+        DBDataHelper.getInstance().delete(DBHelper.GOODS_BROWER_TABLE, null, null);
+        goodsSearchLayout.setVisibility(View.GONE);
+        goodsHistoryLayout.setVisibility(View.GONE);
+        emptyLayout.setVisibility(View.VISIBLE);
+    }
+
+    /**
+     * 进入历史记录模式
+     */
+    private void entryHistoryMode() {
+        goodsHistoryLayout.setVisibility(View.VISIBLE);
+        emptyLayout.setVisibility(View.GONE);
+        goodsSearchLayout.setVisibility(View.GONE);
+        historyListDatas = DBDataHelper.getInstance().select(DBHelper.GOODS_BROWER_TABLE, null, null
+                , DBHelper.TIME + DBHelper.DESC, GoodsModel.class);
+        if (historyAdapter == null) {
+            historyAdapter = new SearchAdapter(this, historyListDatas);
+            historyListView.setAdapter(historyAdapter);
+        } else {
+            historyAdapter.updateData(historyListDatas);
+        }
+    }
+
+    /**
+     * 获取历史记录
+     * @return
+     */
+    private int getHistoryData() {
+        return DBDataHelper.getInstance().select(DBHelper.GOODS_BROWER_TABLE, null,
+                null, null, GoodsModel.class).size();
     }
 
     /**
@@ -119,13 +161,13 @@ public class SearchActivity extends BaseActivity implements AdapterView.OnItemCl
     }
 
     private void decideWhichMode() {
+
     }
 
     @Override
     protected void onResume() {
         super.onResume();
     }
-
 
 
     @OnClick({R.id.cancel_view, R.id.delect_histroy_view, R.id.goods_list_view})
