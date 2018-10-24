@@ -161,6 +161,12 @@ public class DBDataHelper {
         }
     }
 
+    /**
+     * 单行数据插入
+     * @param tableName
+     * @param module
+     * @return
+     */
     public long insert(String tableName, BaseModel module) {
         synchronized (dbHelper) {
             ContentValues contentValues = moduleToContentValues(module);
@@ -168,6 +174,12 @@ public class DBDataHelper {
         }
     }
 
+    /**
+     * 多行数据插入
+     * @param tableName
+     * @param modules
+     * @return
+     */
     public boolean insert(String tableName, ArrayList<BaseModel> modules) {
         synchronized (dbHelper){
             ArrayList<ContentValues> arrs=moduleToContentValues(modules);
@@ -175,6 +187,11 @@ public class DBDataHelper {
         }
     }
 
+    /**
+     * 实例转化为ContentValues
+     * @param modules
+     * @return
+     */
     private ArrayList<ContentValues> moduleToContentValues(ArrayList<BaseModel> modules) {
         ArrayList<ContentValues> values = new ArrayList<>();
         for (BaseModel module : modules) {
@@ -183,6 +200,11 @@ public class DBDataHelper {
         return values;
     }
 
+    /**
+     * 实例转化为ContentValues
+     * @param module
+     * @return
+     */
     private ContentValues moduleToContentValues(BaseModel module) {
         ContentValues contentValues = new ContentValues();
         Field[] fields = module.getClass().getFields();
@@ -214,12 +236,27 @@ public class DBDataHelper {
         return contentValues;
     }
 
+    /**
+     * 删除
+     * @param tableName
+     * @param whereClause
+     * @param whereArgs
+     * @return
+     */
     public int delete(String tableName, String whereClause, String[] whereArgs) {
         synchronized (dbHelper){
             return  dbHelper.delete(tableName,whereClause,whereArgs);
         }
     }
 
+    /**
+     * 更新
+     * @param tableName
+     * @param whereClause
+     * @param whereArgs
+     * @param module
+     * @return
+     */
     public int update(String tableName, String whereClause, String[] whereArgs, BaseModel module) {
         synchronized (dbHelper){
             return dbHelper.update(tableName,moduleToContentValues(module),whereClause,whereArgs);
