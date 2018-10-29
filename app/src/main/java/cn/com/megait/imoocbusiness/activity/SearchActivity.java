@@ -105,6 +105,8 @@ public class SearchActivity extends BaseActivity implements AdapterView.OnItemCl
         }
     };
 
+
+
     /**
      * 进入搜索模式
      */
@@ -154,14 +156,28 @@ public class SearchActivity extends BaseActivity implements AdapterView.OnItemCl
      * 初始化控件
      */
     private void initWidget() {
+        changeStatusBarColor(R.color.color_ffffff);
         goodsListView.setEmptyView(goodsSearchEmptyLayout);
         goodsListView.setOnItemClickListener(this);
         goodsInputView.addTextChangedListener(textWatcher);
         decideWhichMode();
     }
 
+    /**
+     * 判断当前视图模式,选择进入空界面/历史浏览界面
+     */
     private void decideWhichMode() {
 
+        if(getHistoryData()==0){
+            entryEmptyMode();
+        }else{
+            entryHistoryMode();
+        }
+    }
+
+    @Override
+    public void supportFinishAfterTransition() {
+        super.supportFinishAfterTransition();
     }
 
     @Override
