@@ -1,9 +1,13 @@
 package cn.com.megait.imoocbusiness.activity;
 
+import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.support.annotation.Nullable;
 import android.text.Editable;
+import android.text.Html;
+import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.View;
 import android.widget.AdapterView;
@@ -34,8 +38,6 @@ public class SearchActivity extends BaseActivity implements AdapterView.OnItemCl
     /**
      * 公共UI
      */
-    @BindView(R.id.cancel_view)
-    TextView cancelView;
     @BindView(R.id.goods_input_view)
     EditText goodsInputView;
 
@@ -44,8 +46,6 @@ public class SearchActivity extends BaseActivity implements AdapterView.OnItemCl
      */
     @BindView(R.id.history_list_view)
     ListView historyListView;
-    @BindView(R.id.delect_histroy_view)
-    TextView delectHistroyView;
     @BindView(R.id.goods_history_layout)
     LinearLayout goodsHistoryLayout;
 
@@ -72,8 +72,6 @@ public class SearchActivity extends BaseActivity implements AdapterView.OnItemCl
      */
     private SearchAdapter historyAdapter;
     private SearchAdapter searchAdapter;
-    private ArrayList<BaseModel> historyListDatas;
-    private ArrayList<BaseModel> searchingListDatas;
     private GoodsModel goodsModel;
 
     @Override
@@ -97,14 +95,31 @@ public class SearchActivity extends BaseActivity implements AdapterView.OnItemCl
 
         @Override
         public void afterTextChanged(Editable s) {
-            String selections = goodsInputView.getText().toString();
-            if (selections != null && !selections.trim().equals("")) {
-
+            String input = goodsInputView.getText().toString();
+            if (!TextUtils.isEmpty(input)) {
+                entrySearchMode();
+                String selections = DBHelper.GOODS_CODE + " like ? or " + DBHelper.ABBREV + " like ? or " + DBHelper.SPELL + " like ? ";
+                String[] selectionArgs = new String[]{"%" + input + "%", "%" + input + "%", "%" + input + "%"};
+                ArrayList<BaseModel> searchingListDatas = DBDataHelper.getInstance().select(DBHelper.GOODS_LIST_TABLE, selections, selectionArgs, null, GoodsModel.class);
+                if (searchAdapter == null) {
+                    searchAdapter = new SearchAdapter(SearchActivity.this, searchingListDatas);
+                    goodsListView.setAdapter(searchAdapter);
+                } else {
+                    searchAdapter.updateData(searchingListDatas);
+                }
+                goodsListView.smoothScrollToPosition(0);
+                if (Build.VERSION.SDK_INT > Build.VERSION_CODES.N) {
+                    //FROM_HTML_MODE_LEGACY HTML块元素之间两个换行符
+                    seachNoGoodsInfoView.setText(Html.fromHtml(getNoFundInfo(input), Html.FROM_HTML_MODE_LEGACY));
+                } else {
+                    seachNoGoodsInfoView.setText(Html.fromHtml(getNoFundInfo(input)));
+                }
+            } else {
+                decideWhichMode();
             }
 
         }
     };
-
 
 
     /**
@@ -133,7 +148,7 @@ public class SearchActivity extends BaseActivity implements AdapterView.OnItemCl
         goodsHistoryLayout.setVisibility(View.VISIBLE);
         emptyLayout.setVisibility(View.GONE);
         goodsSearchLayout.setVisibility(View.GONE);
-        historyListDatas = DBDataHelper.getInstance().select(DBHelper.GOODS_BROWER_TABLE, null, null
+        ArrayList<BaseModel> historyListDatas = DBDataHelper.getInstance().select(DBHelper.GOODS_BROWER_TABLE, null, null
                 , DBHelper.TIME + DBHelper.DESC, GoodsModel.class);
         if (historyAdapter == null) {
             historyAdapter = new SearchAdapter(this, historyListDatas);
@@ -145,7 +160,6 @@ public class SearchActivity extends BaseActivity implements AdapterView.OnItemCl
 
     /**
      * 获取历史记录
-     * @return
      */
     private int getHistoryData() {
         return DBDataHelper.getInstance().select(DBHelper.GOODS_BROWER_TABLE, null,
@@ -159,6 +173,7 @@ public class SearchActivity extends BaseActivity implements AdapterView.OnItemCl
         changeStatusBarColor(R.color.color_ffffff);
         goodsListView.setEmptyView(goodsSearchEmptyLayout);
         goodsListView.setOnItemClickListener(this);
+        historyListView.setOnItemClickListener(this);
         goodsInputView.addTextChangedListener(textWatcher);
         decideWhichMode();
     }
@@ -167,10 +182,9 @@ public class SearchActivity extends BaseActivity implements AdapterView.OnItemCl
      * 判断当前视图模式,选择进入空界面/历史浏览界面
      */
     private void decideWhichMode() {
-
-        if(getHistoryData()==0){
+        if (getHistoryData() == 0) {
             entryEmptyMode();
-        }else{
+        } else {
             entryHistoryMode();
         }
     }
@@ -186,20 +200,71 @@ public class SearchActivity extends BaseActivity implements AdapterView.OnItemCl
     }
 
 
-    @OnClick({R.id.cancel_view, R.id.delect_histroy_view, R.id.goods_list_view})
+    @OnClick({R.id.cancel_view, R.id.delect_histroy_view})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.cancel_view:
+                this.finish();
                 break;
             case R.id.delect_histroy_view:
-                break;
-            case R.id.goods_list_view:
+                DBDataHelper.getInstance().delete(DBHelper.GOODS_BROWER_TABLE,null,null);
                 break;
         }
     }
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        Intent intent = new Intent(this, GoodsDetailActivity.class);
+        switch (parent.getId()) {
+            case R.id.goods_list_view:
+                goodsModel = (GoodsModel) searchAdapter.getItem(position);
+                intent.putExtra(GoodsDetailActivity.DETAIL_GOODS_CODE, goodsModel.goodscode);
+                startActivity(intent);
+                break;
+            case R.id.history_list_view:
+                goodsModel = (GoodsModel) historyAdapter.getItem(position);
+                intent.putExtra(GoodsDetailActivity.DETAIL_GOODS_CODE, goodsModel.goodscode);
+                insertHistoryTable(goodsModel.goodscode);
+                startActivity(intent);
+                break;
+        }
 
+    }
+
+    /**
+     * 插入历史浏览记录表
+     * @param goodscode 商品编码
+     */
+    private void insertHistoryTable(String goodscode) {
+        final int MAX_HISTORY_BROWER_COUNT=10;//历史记录最大存储数
+        //查询历史记录表是否有相关历史记录
+        int count = DBDataHelper.getInstance().select(DBHelper.GOODS_BROWER_TABLE, DBHelper.GOODS_CODE + " = ? ", new String[]{goodscode}, null, GoodsModel.class).size();
+        //没有相关历史记录,插入数据
+        goodsModel.time=String.valueOf(System.currentTimeMillis());
+        if(count==0){
+            //历史记录没有超过存储值,则添加
+            if(getHistoryData()<MAX_HISTORY_BROWER_COUNT){
+                DBDataHelper.getInstance().insert(DBHelper.GOODS_BROWER_TABLE,goodsModel);
+            //超过,则删除最早的历史记录
+            }else {
+                String whereClause= DBHelper.TIME+" = ?";
+                String[] whereArgs=new String[]{"(select min(time) from "+DBHelper.GOODS_BROWER_TABLE+" )"};
+                DBDataHelper.getInstance().delete(DBHelper.GOODS_BROWER_TABLE,whereClause,whereArgs);
+                DBDataHelper.getInstance().insert(DBHelper.GOODS_BROWER_TABLE,goodsModel);
+            }
+            //有相关历史记录,更新历史记录查询的时间
+        }else{
+            String whereClause= DBHelper.GOODS_CODE+" = ?";
+            String[] whereArgs=new String[]{goodscode};
+            DBDataHelper.getInstance().update(DBHelper.GOODS_BROWER_TABLE,whereClause,whereArgs,goodsModel);
+        }
+    }
+
+    private String getNoFundInfo(String info) {
+        return  "<font color= #666666>"
+                + getString(R.string.search_no_title) + "</font>"
+                + "<font color= #ff3b3b>" + info + "</font>"
+                + "<font color= #666666>" + getString(R.string.search_no_end)
+                + "</font>";
     }
 }

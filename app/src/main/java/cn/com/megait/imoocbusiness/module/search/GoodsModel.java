@@ -8,8 +8,8 @@ import cn.com.megait.imoocbusiness.module.BaseModel;
  * @date 2018/9/29
  */
 public class GoodsModel extends BaseModel {
-    public String _id;
-    public String fdcode;
+    public int _id;
+    public String goodscode;
     public String abbrev;
     public String spell;
     public String type;

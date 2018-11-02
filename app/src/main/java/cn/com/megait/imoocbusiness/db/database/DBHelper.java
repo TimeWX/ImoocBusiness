@@ -39,10 +39,10 @@ public class DBHelper extends SQLiteOpenHelper {
      * 货物记录表
      */
     public static final String GOODS_LIST_TABLE = "goodsListTable";
-    public static final String GOODS_CODE = "goodsCode";
-    public static final String ABBREV = "abbrev";
-    public static final String SPELL = "spell";
-    public static final String GOODS_TYPE = "goodsType";
+    public static final String GOODS_CODE = "goodscode";//商品编码
+    public static final String ABBREV = "abbrev";//缩写
+    public static final String SPELL = "spell";//拼写
+    public static final String GOODS_TYPE = "type";//类型
 
     /**
      * 获取浏览历史记录表.与记录表字段一样
