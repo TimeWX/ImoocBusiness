@@ -18,6 +18,8 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.com.megait.imoocbusiness.R;
 import cn.com.megait.imoocbusiness.activity.base.BaseActivity;
+import cn.com.megait.imoocbusiness.module.course.BaseCourseModel;
+import cn.com.megait.imoocbusiness.util.Util;
 
 /**
  * @author lenovo
@@ -46,6 +48,7 @@ public class GoodsDetailActivity extends BaseActivity implements AdapterView.OnI
 
     private String courseId;
     private String tempHint;
+    private BaseCourseModel baseCourseModel;
 
 
     @Override
@@ -72,6 +75,10 @@ public class GoodsDetailActivity extends BaseActivity implements AdapterView.OnI
      * 进入空状态
      */
     private void entryEmptyMode() {
+        tempHint="";
+        commentEditView.setText("");
+        commentEditView.setHint(getString(R.string.input_comment));
+        Util.hideSoftInputMethod(this,commentEditView);
 
     }
 

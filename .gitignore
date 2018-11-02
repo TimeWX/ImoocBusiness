@@ -10,7 +10,4 @@
 .externalNativeBuild
 *.ser
 *.xml
-*.xml
-*.xml
-*.xml
 .idea/misc.xml
