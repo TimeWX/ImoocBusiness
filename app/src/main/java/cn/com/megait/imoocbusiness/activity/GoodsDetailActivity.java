@@ -58,6 +58,7 @@ public class GoodsDetailActivity extends BaseActivity implements AdapterView.OnI
         ButterKnife.bind(this);
         initData();
         initWidget();
+        requestDetail();
     }
 
     private void initWidget() {
@@ -84,13 +85,21 @@ public class GoodsDetailActivity extends BaseActivity implements AdapterView.OnI
 
 
     private void initData() {
+        Intent intent= getIntent();
+        courseId=intent.getStringExtra(DETAIL_GOODS_CODE);
     }
 
     @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
         setIntent(intent);
+        initData();
+        initWidget();
+        requestDetail();
 
+    }
+
+    private void requestDetail() {
     }
 
     @OnClick({R.id.back_view, R.id.jianpan_view, R.id.send_view})
