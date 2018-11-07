@@ -76,17 +76,25 @@ public class GoodsDetailActivity extends BaseActivity implements AdapterView.OnI
      * 进入空状态
      */
     private void entryEmptyMode() {
-        tempHint="";
+        tempHint = "";
         commentEditView.setText("");
         commentEditView.setHint(getString(R.string.input_comment));
-        Util.hideSoftInputMethod(this,commentEditView);
+        Util.hideSoftInputMethod(this, commentEditView);
+    }
 
+    /**
+     * 进入编辑状态
+     */
+    private void entryEditMode(String hint) {
+        commentEditView.requestFocus();
+        commentEditView.setHint(hint);
+        Util.showSoftInputMethod(this, commentEditView);
     }
 
 
     private void initData() {
-        Intent intent= getIntent();
-        courseId=intent.getStringExtra(DETAIL_GOODS_CODE);
+        Intent intent = getIntent();
+        courseId = intent.getStringExtra(DETAIL_GOODS_CODE);
     }
 
     @Override
