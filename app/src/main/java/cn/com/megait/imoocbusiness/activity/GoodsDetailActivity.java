@@ -58,6 +58,7 @@ public class GoodsDetailActivity extends BaseActivity implements AdapterView.OnI
         ButterKnife.bind(this);
         initData();
         initWidget();
+        requestDetail();
     }
 
     private void initWidget() {
@@ -79,18 +80,34 @@ public class GoodsDetailActivity extends BaseActivity implements AdapterView.OnI
         commentEditView.setText("");
         commentEditView.setHint(getString(R.string.input_comment));
         Util.hideSoftInputMethod(this,commentEditView);
+    }
 
+    /**
+     * 进入编辑状态
+     */
+    private void entryEditMode(String hint) {
+        commentEditView.requestFocus();
+        commentEditView.setHint(hint);
+        Util.showSoftInputMethod(this, commentEditView);
     }
 
 
     private void initData() {
+        Intent intent = getIntent();
+        courseId = intent.getStringExtra(DETAIL_GOODS_CODE);
     }
 
     @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
         setIntent(intent);
+        initData();
+        initWidget();
+        requestDetail();
 
+    }
+
+    private void requestDetail() {
     }
 
     @OnClick({R.id.back_view, R.id.jianpan_view, R.id.send_view})
