@@ -59,7 +59,7 @@ public class SearchAdapter extends BaseAdapter {
         // 根据数据初始化item
         GoodsModel fundSearch = (GoodsModel) getItem(position);
         holder.goodsNameView.setText(fundSearch.abbrev);
-        holder.goodsCodeView.setText(fundSearch.fdcode);
+        holder.goodsCodeView.setText(fundSearch.goodscode);
         return convertView;
     }
 
