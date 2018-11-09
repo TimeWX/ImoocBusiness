@@ -1,12 +1,16 @@
 package cn.com.megait.commonlib.okhttp;
 
+import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
 import javax.net.ssl.HostnameVerifier;
 import javax.net.ssl.SSLSession;
 
 import cn.com.megait.commonlib.okhttp.https.HttpsUtils;
+import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 
 /**
  * @author lenovo
@@ -16,6 +20,8 @@ import okhttp3.OkHttpClient;
 public class CommonOKHttpClient {
 
     private static final int TIME_OUT_SECOND=30;
+    private static final String USER_AGENT_KEY="User-Agent";
+    private static final String USER_AGENT_VALUE="Imooc_Mobile";
     private static OkHttpClient mOkHttpClient;
 
     //配置静态参数
@@ -29,6 +35,19 @@ public class CommonOKHttpClient {
                 return true;
             }
         });
+        /**
+         * 为所有请求添加头
+         */
+        builder.addInterceptor(new Interceptor() {
+            @Override
+            public Response intercept(Chain chain) throws IOException {
+                Request request=chain.request()
+                        .newBuilder()
+                        .addHeader(USER_AGENT_KEY,USER_AGENT_VALUE)
+                        .build();
+                return chain.proceed(request);
+            }
+        });
         //设置超时时间
         builder.connectTimeout(TIME_OUT_SECOND,TimeUnit.SECONDS);
         builder.readTimeout(TIME_OUT_SECOND,TimeUnit.SECONDS);
@@ -36,6 +55,10 @@ public class CommonOKHttpClient {
         //设置请求重定向
         builder.followRedirects(true);
         builder.sslSocketFactory(HttpsUtils.initSSLSocketFactory(),HttpsUtils.initTrustManager());
+        mOkHttpClient=builder.build();
+    }
 
+    public static OkHttpClient getOkHttpClient(){
+        return mOkHttpClient;
     }
 }
