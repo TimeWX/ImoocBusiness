@@ -107,7 +107,7 @@
                 android:textSize="16sp"/>
 
             <TextView
-                android:id="@+id/delect_history_view"
+                android:id="@+id/delete_history_view"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_alignParentRight="true"

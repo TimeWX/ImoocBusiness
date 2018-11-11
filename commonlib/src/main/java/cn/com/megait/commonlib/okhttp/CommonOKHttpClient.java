@@ -6,7 +6,11 @@ import java.util.concurrent.TimeUnit;
 import javax.net.ssl.HostnameVerifier;
 import javax.net.ssl.SSLSession;
 
+import cn.com.megait.commonlib.okhttp.callback.CommonFileCallback;
+import cn.com.megait.commonlib.okhttp.callback.CommonJsonCallback;
 import cn.com.megait.commonlib.okhttp.https.HttpsUtils;
+import cn.com.megait.commonlib.okhttp.listener.DisposeDataHandle;
+import okhttp3.Call;
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -60,5 +64,23 @@ public class CommonOKHttpClient {
 
     public static OkHttpClient getOkHttpClient(){
         return mOkHttpClient;
+    }
+
+    public static Call get(Request request, DisposeDataHandle disposeDataHandle){
+        Call call= mOkHttpClient.newCall(request);
+        call.enqueue(new CommonJsonCallback(disposeDataHandle));
+        return call;
+    }
+
+    public static Call post(Request request, DisposeDataHandle disposeDataHandle){
+        Call call= mOkHttpClient.newCall(request);
+        call.enqueue(new CommonJsonCallback(disposeDataHandle));
+        return call;
+    }
+
+    public static Call downloadFile(Request request,DisposeDataHandle disposeDataHandle){
+        Call call=mOkHttpClient.newCall(request);
+        call.enqueue(new CommonFileCallback(disposeDataHandle));
+        return call;
     }
 }

@@ -200,13 +200,13 @@ public class SearchActivity extends BaseActivity implements AdapterView.OnItemCl
     }
 
 
-    @OnClick({R.id.cancel_view, R.id.delect_histroy_view})
+    @OnClick({R.id.cancel_view, R.id.delete_history_view})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.cancel_view:
                 this.finish();
                 break;
-            case R.id.delect_histroy_view:
+            case R.id.delete_history_view:
                 DBDataHelper.getInstance().delete(DBHelper.GOODS_BROWER_TABLE,null,null);
                 break;
         }
