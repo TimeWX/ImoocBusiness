@@ -66,18 +66,36 @@ public class CommonOKHttpClient {
         return mOkHttpClient;
     }
 
+    /**
+     * GET请求
+     * @param request
+     * @param disposeDataHandle
+     * @return
+     */
     public static Call get(Request request, DisposeDataHandle disposeDataHandle){
         Call call= mOkHttpClient.newCall(request);
         call.enqueue(new CommonJsonCallback(disposeDataHandle));
         return call;
     }
 
+    /**
+     * POST请求
+     * @param request
+     * @param disposeDataHandle
+     * @return
+     */
     public static Call post(Request request, DisposeDataHandle disposeDataHandle){
         Call call= mOkHttpClient.newCall(request);
         call.enqueue(new CommonJsonCallback(disposeDataHandle));
         return call;
     }
 
+    /**
+     * 文件下载
+     * @param request
+     * @param disposeDataHandle
+     * @return
+     */
     public static Call downloadFile(Request request,DisposeDataHandle disposeDataHandle){
         Call call=mOkHttpClient.newCall(request);
         call.enqueue(new CommonFileCallback(disposeDataHandle));
