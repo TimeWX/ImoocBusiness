@@ -2,7 +2,7 @@ package cn.com.megait.imoocbusiness.module.course;
 
 import java.util.ArrayList;
 
-import cn.com.megait.imoocbusiness.module.AdValue;
+import cn.com.megait.commonlib.module.AdValue;
 import cn.com.megait.imoocbusiness.module.BaseModel;
 
 /**

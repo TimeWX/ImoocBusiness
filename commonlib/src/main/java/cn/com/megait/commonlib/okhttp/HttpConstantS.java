@@ -5,7 +5,10 @@ package cn.com.megait.commonlib.okhttp;
  * @function
  * @date 2018/11/7
  */
-public class HttpConstant {
+public class HttpConstantS {
+
+    private static final String ROOT_URL = "";
+    public static final String HOME_RECOMMAND = ROOT_URL + "";
 
     //代表客户端版本号
     public static final String AVS = "avs";
@@ -24,6 +27,7 @@ public class HttpConstant {
     public static final String AD_PLAY_SUCCESS = "300";
     //广告加载失败
     public static final String AD_PLAY_FAILED = "301";
+
     /**
      * 埋点请求相关参数常量
      */

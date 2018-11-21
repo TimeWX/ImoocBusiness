@@ -46,9 +46,9 @@ public class CommonJsonCallback implements Callback {
     private DisposeDataListener mListener;
     private Class<?> mClass;
 
-    public CommonJsonCallback(DisposeDataHandle handle) {
-        this.mListener = handle.getListener();
-        this.mClass = handle.getmClass();
+    public CommonJsonCallback(DisposeDataHandle disposeDataHandle) {
+        this.mListener = disposeDataHandle.getListener();
+        this.mClass = disposeDataHandle.getmClass();
         this.mDeliveryHandler = new Handler(Looper.getMainLooper());
     }
 

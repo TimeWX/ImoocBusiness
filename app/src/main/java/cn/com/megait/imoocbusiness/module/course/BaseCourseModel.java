@@ -8,7 +8,7 @@ import cn.com.megait.imoocbusiness.module.BaseModel;
  * @date 2018/11/2
  */
 public class BaseCourseModel extends BaseModel {
-    public String ecode;
+    public int ecode;
     public String emsg;
     public CourseModel data;
 }

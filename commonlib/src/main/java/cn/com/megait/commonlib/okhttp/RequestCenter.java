@@ -5,10 +5,15 @@ import cn.com.megait.commonlib.okhttp.request.CommonRequest;
 
 /**
  * @author lenovo
- * @function
+ * @function 存放应用中所有的请求
  * @date 2018/11/7
  */
 public class RequestCenter {
+
+
+
+
+
 
 
     /**

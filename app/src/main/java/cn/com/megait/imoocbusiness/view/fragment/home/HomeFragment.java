@@ -1,11 +1,14 @@
 package cn.com.megait.imoocbusiness.view.fragment.home;
 
+import android.content.Intent;
+import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -14,12 +17,15 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
+import cn.com.megait.commonlib.okhttp.listener.DisposeDataListener;
 import cn.com.megait.imoocbusiness.R;
 import cn.com.megait.imoocbusiness.constant.Constant;
+import cn.com.megait.imoocbusiness.module.recommand.BaseRecommandModel;
+import cn.com.megait.imoocbusiness.network.http.RequestCenter;
 import cn.com.megait.imoocbusiness.util.Util;
 import cn.com.megait.imoocbusiness.view.fragment.BaseFragment;
 
-public class HomeFragment extends BaseFragment {
+public class HomeFragment extends BaseFragment implements AdapterView.OnItemClickListener {
 
     @BindView(R.id.qrcode_view)
     TextView qrcodeView;
@@ -31,8 +37,10 @@ public class HomeFragment extends BaseFragment {
     ImageView loadingView;
     @BindView(R.id.list_view)
     ListView listView;
+
     Unbinder unbinder;
     private View mContentView;
+    private BaseRecommandModel mBaseRecommandModel;
 
     @Nullable
     @Override
@@ -40,14 +48,63 @@ public class HomeFragment extends BaseFragment {
         mContext = getActivity();
         mContentView = inflater.inflate(R.layout.fragment_home_layout, container, false);
         unbinder = ButterKnife.bind(this, mContentView);
+        initView();
         return mContentView;
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        requestRecommandData();
+    }
+
+    private void requestRecommandData() {
+        RequestCenter.requestRecommandData(new DisposeDataListener() {
+            @Override
+            public void onSuccess(Object responseObj) {
+
+                if (responseObj instanceof BaseRecommandModel) {
+                    mBaseRecommandModel = (BaseRecommandModel) responseObj;
+                    showSuccessView();
+                }
+            }
+
+            @Override
+            public void onFaliure(Object reasonObj) {
+                showFailedView();
+            }
+        });
+    }
+
+    private void showSuccessView() {
+        //更新UI
+    }
+
+    private void showFailedView() {
+        //显示请求失败的View
+    }
+
+    @Override
+    public void doOpenCamera() {
+        super.doOpenCamera();
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+    }
+
+    private void initView() {
+        listView.setOnItemClickListener(this);
+        AnimationDrawable animationDrawable = (AnimationDrawable) loadingView.getDrawable();
+        animationDrawable.start();
     }
 
     @Override
     public void onDestroyView() {
         if (unbinder != null) {
             unbinder.unbind();
-            unbinder=null;
+            unbinder = null;
         }
         super.onDestroyView();
 
@@ -58,20 +115,25 @@ public class HomeFragment extends BaseFragment {
         switch (view.getId()) {
             //扫一扫
             case R.id.qrcode_view:
-                if(hasPermission(Constant.HARDWARE_CAMERA_PERMISSION)){
+                if (hasPermission(Constant.HARDWARE_CAMERA_PERMISSION)) {
                     doOpenCamera();
-                }else{
-                    applyForPermission(Constant.HARDWARE_CAMERA_CODE,Constant.HARDWARE_CAMERA_PERMISSION);
+                } else {
+                    applyForPermission(Constant.HARDWARE_CAMERA_CODE, Constant.HARDWARE_CAMERA_PERMISSION);
                 }
                 break;
             //目录
             case R.id.category_view:
                 //与48038614用户进行QQ对话
-                Util.skipToQQChat(mContext,"48038614");
+                Util.skipToQQChat(mContext, "48038614");
                 break;
             //搜索
             case R.id.search_view:
                 break;
         }
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
     }
 }
