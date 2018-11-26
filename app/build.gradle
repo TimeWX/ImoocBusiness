@@ -25,16 +25,12 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
-    implementation 'com.jakewharton:butterknife:8.8.1'
-    //导入ButterKnife
+    implementation 'com.jakewharton:butterknife:8.8.1'//导入ButterKnife
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
-    implementation 'de.hdodenhof:circleimageview:2.2.0'
-    //导入CircleImageView
-    implementation 'com.readystatesoftware.systembartint:systembartint:1.0.3'
-    //SystemBar着色
-    implementation 'com.alibaba:fastjson:1.1.70.android'
-    //导入FastJson
+    implementation 'de.hdodenhof:circleimageview:2.2.0' //导入CircleImageView
+    implementation 'com.readystatesoftware.systembartint:systembartint:1.0.3'//SystemBar着色
+    implementation 'com.alibaba:fastjson:1.1.70.android'//导入FastJson
+    implementation 'com.squareup.okhttp3:okhttp:3.3.0'//okttp依赖
+
     implementation project(':commonlib')
-    //okttp依赖
-    implementation 'com.squareup.okhttp3:okhttp:3.3.0'
 }

@@ -1,2 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="cn.com.megait.commonlib" />
+    package="cn.com.megait.commonlib" >
+    <!--震动器权限申请-->
+    <uses-permission android:name="android.permission.VIBRATE"/>
+</manifest>

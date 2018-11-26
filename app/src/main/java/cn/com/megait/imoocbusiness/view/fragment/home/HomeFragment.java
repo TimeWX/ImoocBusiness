@@ -18,6 +18,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
 import cn.com.megait.commonlib.okhttp.listener.DisposeDataListener;
+import cn.com.megait.commonlib.zxing.app.CaptureActivity;
 import cn.com.megait.imoocbusiness.R;
 import cn.com.megait.imoocbusiness.constant.Constant;
 import cn.com.megait.imoocbusiness.module.recommand.BaseRecommandModel;
@@ -41,6 +42,8 @@ public class HomeFragment extends BaseFragment implements AdapterView.OnItemClic
     Unbinder unbinder;
     private View mContentView;
     private BaseRecommandModel mBaseRecommandModel;
+
+    private static final int REQUEST_QRCODE = 0X01;
 
     @Nullable
     @Override
@@ -77,6 +80,12 @@ public class HomeFragment extends BaseFragment implements AdapterView.OnItemClic
     }
 
     private void showSuccessView() {
+        if (mBaseRecommandModel != null && mBaseRecommandModel.data != null
+                && mBaseRecommandModel.data.list != null && mBaseRecommandModel.data.list.size() > 0) {
+            loadingView.setVisibility(View.GONE);
+            listView.setVisibility(View.VISIBLE);
+
+        }
         //更新UI
     }
 
@@ -86,12 +95,17 @@ public class HomeFragment extends BaseFragment implements AdapterView.OnItemClic
 
     @Override
     public void doOpenCamera() {
-        super.doOpenCamera();
+        Intent intent = new Intent(this.getActivity(), CaptureActivity.class);
+        startActivityForResult(intent, REQUEST_QRCODE);
     }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
+        switch (requestCode) {
+            case REQUEST_QRCODE:
+                break;
+
+        }
     }
 
     private void initView() {
