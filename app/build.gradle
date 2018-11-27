@@ -31,6 +31,12 @@ dependencies {
     implementation 'com.readystatesoftware.systembartint:systembartint:1.0.3'//SystemBar着色
     implementation 'com.alibaba:fastjson:1.1.70.android'//导入FastJson
     implementation 'com.squareup.okhttp3:okhttp:3.3.0'//okttp依赖
+    //自动滚动,轮播循环的ViewPager
+    implementation ('cn.trinea.android.view.autoscrollviewpager:android-auto-scroll-view-pager:1.1.2') {
+        exclude module: 'support-v4'
+    }
+
+   /* implementation 'com.github.chrisbanes:PhotoView:2.2.0'*/
 
     implementation project(':commonlib')
 }
