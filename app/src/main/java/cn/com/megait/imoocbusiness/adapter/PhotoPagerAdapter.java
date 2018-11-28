@@ -7,7 +7,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import com.github.chrisbanes.photoview.PhotoView;
+
 import java.util.ArrayList;
+
 
 import cn.com.megait.commonlib.adutil.ImageLoaderManager;
 import cn.com.megait.imoocbusiness.activity.GoodsDetailActivity;

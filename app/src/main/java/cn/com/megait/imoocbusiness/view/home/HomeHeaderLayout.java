@@ -12,6 +12,7 @@ import cn.com.megait.commonlib.adutil.ImageLoaderManager;
 import cn.com.megait.imoocbusiness.R;
 import cn.com.megait.imoocbusiness.adapter.PhotoPagerAdapter;
 import cn.com.megait.imoocbusiness.module.recommand.RecommandFooterValue;
+import cn.com.megait.imoocbusiness.module.recommand.RecommandHeaderValue;
 import cn.com.megait.imoocbusiness.view.viewpagerindicator.CirclePageIndicator;
 import cn.trinea.android.view.autoscrollviewpager.AutoScrollViewPager;
 
@@ -37,14 +38,14 @@ public class HomeHeaderLayout extends RelativeLayout {
     /**
      * Data
      */
-    private RecommandHeadValue mHeaderValue;
+    private RecommandHeaderValue mHeaderValue;
     private ImageLoaderManager mImageLoader;
 
-    public HomeHeaderLayout(Context context, RecommandHeadValue headerValue) {
+    public HomeHeaderLayout(Context context, RecommandHeaderValue headerValue) {
         this(context, null, headerValue);
     }
 
-    public HomeHeaderLayout(Context context, AttributeSet attrs, RecommandHeadValue headerValue) {
+    public HomeHeaderLayout(Context context, AttributeSet attrs, RecommandHeaderValue headerValue) {
         super(context, attrs);
         mContext = context;
         mHeaderValue = headerValue;
