@@ -10,7 +10,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import cn.com.megait.commonlib.activity.AdBrowserActivity;
-import cn.com.megait.commonlib.adutil.ImageLoaderManager;
+import cn.com.megait.commonlib.adutil.ImageLoaderUtils;
 import cn.com.megait.imoocbusiness.R;
 import cn.com.megait.imoocbusiness.module.recommand.RecommandFooterValue;
 
@@ -36,7 +36,7 @@ public class HomeBottomItem extends RelativeLayout {
      * Data
      */
     private RecommandFooterValue mData;
-    private ImageLoaderManager mImageLoader;
+    private ImageLoaderUtils mImageLoader;
 
     public HomeBottomItem(Context context, RecommandFooterValue data) {
         this(context, null, data);
@@ -46,7 +46,7 @@ public class HomeBottomItem extends RelativeLayout {
         super(context, attrs);
         mContext = context;
         mData = data;
-        mImageLoader = ImageLoaderManager.getInstance(mContext);
+        mImageLoader = ImageLoaderUtils.getInstance(mContext);
         initView();
     }
 

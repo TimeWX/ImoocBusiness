@@ -21,7 +21,7 @@ import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
  * @function UniversalImageLoader工具类
  * @date 2018/11/14
  */
-public class ImageLoaderManager {
+public class ImageLoaderUtils {
     private static final int THREAD_COUNT=3;//表示UniversalImageLoader加载最多的线程
     private static final int PRIORITY=2;//优先级
     private static final int READ_TIME_OUT=30*1000;//读取超时时间30S
@@ -30,21 +30,21 @@ public class ImageLoaderManager {
     private static final int DISK_CACHE_SIZE=50*1024*1024;//磁盘缓存 50M
     private static final int FADE_IN_DISPLAY=400;
 
-    private static ImageLoaderManager mInstance;
+    private static ImageLoaderUtils mInstance;
     private static ImageLoader mImageLoader;
 
-    public static ImageLoaderManager getInstance(Context context){
+    public static ImageLoaderUtils getInstance(Context context){
         if(mInstance!=null){
-            synchronized (ImageLoaderManager.class){
+            synchronized (ImageLoaderUtils.class){
                 if(mInstance!=null){
-                    mInstance=new ImageLoaderManager(context);
+                    mInstance=new ImageLoaderUtils(context);
                 }
             }
         }
         return mInstance;
     }
 
-    private ImageLoaderManager(Context context){
+    private ImageLoaderUtils(Context context){
         ImageLoaderConfiguration configuration=new ImageLoaderConfiguration.Builder(context)
                 .threadPoolSize(THREAD_COUNT)
                 .threadPoolSize(Thread.NORM_PRIORITY-PRIORITY)

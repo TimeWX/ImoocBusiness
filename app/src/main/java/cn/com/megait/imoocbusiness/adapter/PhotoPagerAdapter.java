@@ -12,7 +12,7 @@ import com.github.chrisbanes.photoview.PhotoView;
 import java.util.ArrayList;
 
 
-import cn.com.megait.commonlib.adutil.ImageLoaderManager;
+import cn.com.megait.commonlib.adutil.ImageLoaderUtils;
 import cn.com.megait.imoocbusiness.activity.GoodsDetailActivity;
 
 /**
@@ -26,7 +26,7 @@ public class PhotoPagerAdapter extends PagerAdapter {
 
     private boolean mIsMatch;
     private ArrayList<String> mData;
-    private ImageLoaderManager mLoader;
+    private ImageLoaderUtils mLoader;
 
 
 
@@ -34,7 +34,7 @@ public class PhotoPagerAdapter extends PagerAdapter {
         mContext = context;
         mData = list;
         mIsMatch = isMatch;
-        mLoader = ImageLoaderManager.getInstance(mContext);
+        mLoader = ImageLoaderUtils.getInstance(mContext);
     }
 
     @Override

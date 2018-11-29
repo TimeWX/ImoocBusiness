@@ -8,7 +8,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import cn.com.megait.commonlib.adutil.ImageLoaderManager;
+import cn.com.megait.commonlib.adutil.ImageLoaderUtils;
 import cn.com.megait.imoocbusiness.R;
 import cn.com.megait.imoocbusiness.adapter.PhotoPagerAdapter;
 import cn.com.megait.imoocbusiness.module.recommand.RecommandFooterValue;
@@ -39,7 +39,7 @@ public class HomeHeaderLayout extends RelativeLayout {
      * Data
      */
     private RecommandHeaderValue mHeaderValue;
-    private ImageLoaderManager mImageLoader;
+    private ImageLoaderUtils mImageLoader;
 
     public HomeHeaderLayout(Context context, RecommandHeaderValue headerValue) {
         this(context, null, headerValue);
@@ -49,7 +49,7 @@ public class HomeHeaderLayout extends RelativeLayout {
         super(context, attrs);
         mContext = context;
         mHeaderValue = headerValue;
-        mImageLoader = ImageLoaderManager.getInstance(mContext);
+        mImageLoader = ImageLoaderUtils.getInstance(mContext);
         initView();
     }
 

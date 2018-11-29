@@ -15,8 +15,10 @@ import android.view.WindowManager;
 import android.webkit.WebView;
 import android.widget.Button;
 
+import cn.com.megait.commonlib.adutil.LogUtils;
 import cn.com.megait.commonlib.adutil.Utils;
 import cn.com.megait.commonlib.widget.adbrowser.AdBrowserLayout;
+import cn.com.megait.commonlib.widget.adbrowser.AdBrowserWebViewClient;
 import cn.com.megait.commonlib.widget.adbrowser.Base64Drawables;
 import cn.com.megait.commonlib.widget.adbrowser.BrowserWebView;
 
@@ -158,7 +160,7 @@ public class AdBrowserActivity extends AppCompatActivity {
 
     private void initButtonListeners(final WebView webView) {
 
-        mLayout.getBackButton().setOnClickListener(new OnClickListener() {
+        mLayout.getBackButton().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (webView.canGoBack()) {
@@ -168,14 +170,14 @@ public class AdBrowserActivity extends AppCompatActivity {
             }
         });
 
-        mLayout.getCloseButton().setOnClickListener(new OnClickListener() {
+        mLayout.getCloseButton().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();
             }
         });
 
-        mLayout.getRefreshButton().setOnClickListener(new OnClickListener() {
+        mLayout.getRefreshButton().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 mLayout.getProgressBar().setVisibility(View.VISIBLE);
@@ -183,7 +185,7 @@ public class AdBrowserActivity extends AppCompatActivity {
             }
         });
 
-        mLayout.getNativeButton().setOnClickListener(new OnClickListener() {
+        mLayout.getNativeButton().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String uriString = webView.getUrl();
