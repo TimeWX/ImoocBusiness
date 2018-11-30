@@ -84,4 +84,6 @@ public class HomeHeaderLayout extends RelativeLayout {
         HomeBottomItem item = new HomeBottomItem(mContext, value);
         return item;
     }
+
+
 }
