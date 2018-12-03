@@ -8,7 +8,7 @@ import android.os.Environment;
  * @function 权限常量
  * @date 2018/9/21
  */
-public class Constant {
+public class Constants {
     public static final int WRITE_READ_EXTERNAL_CODE=0X01;
     public static final String[] WRITE_READ_EXTERNAL_PERMISSION=new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE,Manifest.permission.READ_EXTERNAL_STORAGE};
 

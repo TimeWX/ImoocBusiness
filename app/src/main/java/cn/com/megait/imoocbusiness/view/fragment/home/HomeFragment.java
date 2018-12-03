@@ -20,7 +20,7 @@ import butterknife.Unbinder;
 import cn.com.megait.commonlib.okhttp.listener.DisposeDataListener;
 import cn.com.megait.commonlib.zxing.app.CaptureActivity;
 import cn.com.megait.imoocbusiness.R;
-import cn.com.megait.imoocbusiness.constant.Constant;
+import cn.com.megait.imoocbusiness.constant.Constants;
 import cn.com.megait.imoocbusiness.module.recommand.BaseRecommandModel;
 import cn.com.megait.imoocbusiness.network.http.RequestCenter;
 import cn.com.megait.imoocbusiness.util.Util;
@@ -129,10 +129,10 @@ public class HomeFragment extends BaseFragment implements AdapterView.OnItemClic
         switch (view.getId()) {
             //扫一扫
             case R.id.qrcode_view:
-                if (hasPermission(Constant.HARDWARE_CAMERA_PERMISSION)) {
+                if (hasPermission(Constants.HARDWARE_CAMERA_PERMISSION)) {
                     doOpenCamera();
                 } else {
-                    applyForPermission(Constant.HARDWARE_CAMERA_CODE, Constant.HARDWARE_CAMERA_PERMISSION);
+                    applyForPermission(Constants.HARDWARE_CAMERA_CODE, Constants.HARDWARE_CAMERA_PERMISSION);
                 }
                 break;
             //目录

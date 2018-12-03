@@ -10,7 +10,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 
-import cn.com.megait.imoocbusiness.constant.Constant;
+import cn.com.megait.imoocbusiness.constant.Constants;
 
 /**
  * @author TimeW
@@ -75,7 +75,7 @@ public class BaseActivity extends AppCompatActivity {
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         switch (requestCode){
-            case Constant.WRITE_READ_EXTERNAL_CODE:
+            case Constants.WRITE_READ_EXTERNAL_CODE:
                 if(grantResults.length>0 && grantResults[0]== PackageManager.PERMISSION_GRANTED){
                     doSDCardPermission();
                 }

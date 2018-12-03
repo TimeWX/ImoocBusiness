@@ -20,6 +20,7 @@ import cn.trinea.android.view.autoscrollviewpager.AutoScrollViewPager;
  * @author lenovo
  * @function
  * @date 2018/11/22
+ * TODO 了解
  */
 public class HomeHeaderLayout extends RelativeLayout {
     private Context mContext;

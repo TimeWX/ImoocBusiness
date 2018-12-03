@@ -7,7 +7,7 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 
-import cn.com.megait.imoocbusiness.constant.Constant;
+import cn.com.megait.imoocbusiness.constant.Constants;
 
 
 /**
@@ -57,13 +57,13 @@ public class BaseFragment extends Fragment {
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         switch (requestCode) {
             //请求读写内存
-            case Constant.WRITE_READ_EXTERNAL_CODE:
+            case Constants.WRITE_READ_EXTERNAL_CODE:
                 if(grantResults.length>0 && grantResults[0]==PackageManager.PERMISSION_GRANTED){
                     doWriteSDCard();
                 }
                 break;
             //请求打开照相机
-            case Constant.HARDWARE_CAMERA_CODE:
+            case Constants.HARDWARE_CAMERA_CODE:
                 if(grantResults.length>0 && grantResults[0]==PackageManager.PERMISSION_GRANTED){
                     doOpenCamera();
                 }

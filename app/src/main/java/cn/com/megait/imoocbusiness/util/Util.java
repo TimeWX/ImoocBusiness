@@ -9,7 +9,7 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
-import cn.com.megait.imoocbusiness.constant.Constant;
+import cn.com.megait.imoocbusiness.constant.Constants;
 
 /**
  * @author TimeW
@@ -28,7 +28,7 @@ public class Util {
     public static void skipToQQChat(Context context, String qqNum) {
         Uri uri = createQQUri(qqNum);
         //检测是否安装QQ
-        if (checkAPKExist(context, Constant.TENCENT_QQ_PACKGAE_NAME)) {
+        if (checkAPKExist(context, Constants.TENCENT_QQ_PACKGAE_NAME)) {
             Intent intent = new Intent(Intent.ACTION_VIEW, uri);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             context.startActivity(intent);
