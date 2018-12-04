@@ -26,6 +26,7 @@ import static android.widget.LinearLayout.VERTICAL;
  * @author lenovo
  * @function
  * @date 2018/11/22
+ * TODO 12.5要去了解
  */
 public class CirclePageIndicator extends View implements PageIndicator {
     private static final int INVALID_POINTER = -1;
@@ -36,13 +37,13 @@ public class CirclePageIndicator extends View implements PageIndicator {
     private final Paint mPaintFill = new Paint(ANTI_ALIAS_FLAG);
     private ViewPager mViewPager;
     private ViewPager.OnPageChangeListener mListener;
-    private int mCurrentPage;
-    private int mSnapPage;
+    private int mCurrentPage;//当前页
+    private int mSnapPage;//当前打断页(即正在实施滚动的页面)
     private float mPageOffset;
-    private int mScrollState;
-    private int mOrientation;
+    private int mScrollState;//滚动状态
+    private int mOrientation;//滚动方向
     private boolean mCentered;
-    private boolean mSnap;
+    private boolean mSnap;//是否手动滚动
 
     private int mTouchSlop;
     private float mLastMotionX = -1;
@@ -64,11 +65,17 @@ public class CirclePageIndicator extends View implements PageIndicator {
 
         //Load defaults from resources
         final Resources res = getResources();
+        //默认页面颜色:黑色
         final int defaultPageColor = res.getColor(R.color.default_circle_indicator_page_color);
+        //默认填充颜色:白色
         final int defaultFillColor = res.getColor(R.color.default_circle_indicator_fill_color);
+        //默认方向:向右滚动
         final int defaultOrientation = res.getInteger(R.integer.default_circle_indicator_orientation);
+        //默认边框颜色
         final int defaultStrokeColor = res.getColor(R.color.default_circle_indicator_stroke_color);
+        //默认边框宽度
         final float defaultStrokeWidth = res.getDimension(R.dimen.default_circle_indicator_stroke_width);
+        //默认默认
         final float defaultRadius = res.getDimension(R.dimen.default_circle_indicator_radius);
         final boolean defaultCentered = res.getBoolean(R.bool.default_circle_indicator_centered);
         final boolean defaultSnap = res.getBoolean(R.bool.default_circle_indicator_snap);
@@ -90,12 +97,15 @@ public class CirclePageIndicator extends View implements PageIndicator {
 
         Drawable background = a.getDrawable(R.styleable.CirclePageIndicator_android_background);
         if (background != null) {
-            setBackgroundDrawable(background);
+            setBackground(background);
         }
-
+        //obtainStyledAttributes必须Recycle
         a.recycle();
 
         final ViewConfiguration configuration = ViewConfiguration.get(context);
+        /**
+         * TODO Now-Coding
+         */
         mTouchSlop = ViewConfigurationCompat.getScaledPagingTouchSlop(configuration);
     }
 

@@ -25,6 +25,7 @@ import cn.com.megait.imoocbusiness.module.recommand.BaseRecommandModel;
 import cn.com.megait.imoocbusiness.network.http.RequestCenter;
 import cn.com.megait.imoocbusiness.util.Util;
 import cn.com.megait.imoocbusiness.view.fragment.BaseFragment;
+import cn.com.megait.imoocbusiness.view.home.HomeHeadLayout;
 
 public class HomeFragment extends BaseFragment implements AdapterView.OnItemClickListener {
 
@@ -84,6 +85,8 @@ public class HomeFragment extends BaseFragment implements AdapterView.OnItemClic
                 && mBaseRecommandModel.data.list != null && mBaseRecommandModel.data.list.size() > 0) {
             loadingView.setVisibility(View.GONE);
             listView.setVisibility(View.VISIBLE);
+            //ListView添加头
+            listView.addHeaderView(new HomeHeadLayout(mContext,mBaseRecommandModel.data.head));
 
         }
         //更新UI
@@ -148,6 +151,8 @@ public class HomeFragment extends BaseFragment implements AdapterView.OnItemClic
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+
 
     }
 }

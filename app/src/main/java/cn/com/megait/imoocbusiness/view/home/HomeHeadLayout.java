@@ -18,11 +18,11 @@ import cn.trinea.android.view.autoscrollviewpager.AutoScrollViewPager;
 
 /**
  * @author lenovo
- * @function
+ * @function ListView顶部布局
  * @date 2018/11/22
- * TODO 了解
+ *
  */
-public class HomeHeaderLayout extends RelativeLayout {
+public class HomeHeadLayout extends RelativeLayout {
     private Context mContext;
 
     /**
@@ -42,11 +42,11 @@ public class HomeHeaderLayout extends RelativeLayout {
     private RecommandHeaderValue mHeaderValue;
     private ImageLoaderUtils mImageLoader;
 
-    public HomeHeaderLayout(Context context, RecommandHeaderValue headerValue) {
+    public HomeHeadLayout(Context context, RecommandHeaderValue headerValue) {
         this(context, null, headerValue);
     }
 
-    public HomeHeaderLayout(Context context, AttributeSet attrs, RecommandHeaderValue headerValue) {
+    public HomeHeadLayout(Context context, AttributeSet attrs, RecommandHeaderValue headerValue) {
         super(context, attrs);
         mContext = context;
         mHeaderValue = headerValue;
