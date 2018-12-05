@@ -15,18 +15,17 @@ import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewConfiguration;
+import android.widget.LinearLayout;
 
 import cn.com.megait.imoocbusiness.R;
 
 import static android.graphics.Paint.ANTI_ALIAS_FLAG;
-import static android.widget.LinearLayout.HORIZONTAL;
-import static android.widget.LinearLayout.VERTICAL;
 
 /**
  * @author lenovo
  * @function
  * @date 2018/11/22
- * TODO 12.5要去了解
+ * TODO 12.6 了解OnDraw onTouchEvent
  */
 public class CirclePageIndicator extends View implements PageIndicator {
     private static final int INVALID_POINTER = -1;
@@ -45,7 +44,7 @@ public class CirclePageIndicator extends View implements PageIndicator {
     private boolean mCentered;
     private boolean mSnap;//是否手动滚动
 
-    private int mTouchSlop;
+    private int mTouchSlop;//判断触摸滑动最小距离
     private float mLastMotionX = -1;
     private int mActivePointerId = INVALID_POINTER;
     private boolean mIsDragging;
@@ -101,11 +100,8 @@ public class CirclePageIndicator extends View implements PageIndicator {
         }
         //obtainStyledAttributes必须Recycle
         a.recycle();
-
         final ViewConfiguration configuration = ViewConfiguration.get(context);
-        /**
-         * TODO Now-Coding
-         */
+        //获取最小滑动距离参数
         mTouchSlop = ViewConfigurationCompat.getScaledPagingTouchSlop(configuration);
     }
 
@@ -113,6 +109,7 @@ public class CirclePageIndicator extends View implements PageIndicator {
     public void setCentered(boolean centered) {
         mCentered = centered;
         invalidate();
+
     }
 
     public boolean isCentered() {
@@ -139,12 +136,11 @@ public class CirclePageIndicator extends View implements PageIndicator {
 
     public void setOrientation(int orientation) {
         switch (orientation) {
-            case HORIZONTAL:
-            case VERTICAL:
+            case LinearLayout.HORIZONTAL:
+            case LinearLayout.VERTICAL:
                 mOrientation = orientation;
                 requestLayout();
                 break;
-
             default:
                 throw new IllegalArgumentException("Orientation must be either HORIZONTAL or VERTICAL.");
         }
@@ -211,7 +207,7 @@ public class CirclePageIndicator extends View implements PageIndicator {
         int longPaddingBefore;
         int longPaddingAfter;
         int shortPaddingBefore;
-        if (mOrientation == HORIZONTAL) {
+        if (mOrientation == LinearLayout.HORIZONTAL) {
             longSize = getWidth();
             longPaddingBefore = getPaddingLeft();
             longPaddingAfter = getPaddingRight();
@@ -241,7 +237,7 @@ public class CirclePageIndicator extends View implements PageIndicator {
         //Draw stroked circles
         for (int iLoop = 0; iLoop < count; iLoop++) {
             float drawLong = longOffset + (iLoop * threeRadius);
-            if (mOrientation == HORIZONTAL) {
+            if (mOrientation == LinearLayout.HORIZONTAL) {
                 dX = drawLong;
                 dY = shortOffset;
             } else {
@@ -264,7 +260,7 @@ public class CirclePageIndicator extends View implements PageIndicator {
         if (!mSnap) {
             cx += mPageOffset * threeRadius;
         }
-        if (mOrientation == HORIZONTAL) {
+        if (mOrientation == LinearLayout.HORIZONTAL) {
             dX = longOffset + cx;
             dY = shortOffset;
         } else {
@@ -363,13 +359,13 @@ public class CirclePageIndicator extends View implements PageIndicator {
             return;
         }
         if (mViewPager != null) {
-            mViewPager.setOnPageChangeListener(null);
+            mViewPager.addOnPageChangeListener(null);
         }
         if (view.getAdapter() == null) {
             throw new IllegalStateException("ViewPager does not have adapter instance.");
         }
         mViewPager = view;
-        mViewPager.setOnPageChangeListener(this);
+        mViewPager.addOnPageChangeListener(this);
         invalidate();
     }
 
@@ -439,7 +435,7 @@ public class CirclePageIndicator extends View implements PageIndicator {
      */
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        if (mOrientation == HORIZONTAL) {
+        if (mOrientation == LinearLayout.HORIZONTAL) {
             setMeasuredDimension(measureLong(widthMeasureSpec), measureShort(heightMeasureSpec));
         } else {
             setMeasuredDimension(measureShort(widthMeasureSpec), measureLong(heightMeasureSpec));
@@ -458,6 +454,7 @@ public class CirclePageIndicator extends View implements PageIndicator {
         int specMode = MeasureSpec.getMode(measureSpec);
         int specSize = MeasureSpec.getSize(measureSpec);
 
+        //如果设定一个确定值,那么宽度为确定值
         if ((specMode == MeasureSpec.EXACTLY) || (mViewPager == null)) {
             //We were told how big to be
             result = specSize;
@@ -467,6 +464,7 @@ public class CirclePageIndicator extends View implements PageIndicator {
             result = (int)(getPaddingLeft() + getPaddingRight()
                     + (count * 2 * mRadius) + (count - 1) * mRadius + 1);
             //Respect AT_MOST value if that was what is called for by measureSpec
+            //当Width设定为Wrap_Content
             if (specMode == MeasureSpec.AT_MOST) {
                 result = Math.min(result, specSize);
             }
@@ -500,6 +498,10 @@ public class CirclePageIndicator extends View implements PageIndicator {
         return result;
     }
 
+    /**
+     * 重载View,数据恢复
+     * @param state
+     */
     @Override
     public void onRestoreInstanceState(Parcelable state) {
         SavedState savedState = (SavedState)state;
@@ -509,6 +511,10 @@ public class CirclePageIndicator extends View implements PageIndicator {
         requestLayout();
     }
 
+    /**
+     * 当Destory前,保存数据
+     * @return
+     */
     @Override
     public Parcelable onSaveInstanceState() {
         Parcelable superState = super.onSaveInstanceState();
@@ -517,7 +523,10 @@ public class CirclePageIndicator extends View implements PageIndicator {
         return savedState;
     }
 
-    static class SavedState extends BaseSavedState {
+    /**
+     * TODO 了解SavedState
+     */
+     static class SavedState extends BaseSavedState {
         int currentPage;
 
         public SavedState(Parcelable superState) {
