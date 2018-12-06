@@ -197,16 +197,14 @@ public class CirclePageIndicator extends View implements PageIndicator {
         if (count == 0) {
             return;
         }
-
         if (mCurrentPage >= count) {
             setCurrentItem(count - 1);
             return;
         }
-
-        int longSize;
-        int longPaddingBefore;
-        int longPaddingAfter;
-        int shortPaddingBefore;
+        int longSize;//总长
+        int longPaddingBefore;//前边距
+        int longPaddingAfter;//后边距
+        int shortPaddingBefore;//顶边距
         if (mOrientation == LinearLayout.HORIZONTAL) {
             longSize = getWidth();
             longPaddingBefore = getPaddingLeft();
@@ -218,12 +216,15 @@ public class CirclePageIndicator extends View implements PageIndicator {
             longPaddingAfter = getPaddingBottom();
             shortPaddingBefore = getPaddingLeft();
         }
-
+        //圆之间间距
         final float threeRadius = mRadius * 3;
         final float shortOffset = shortPaddingBefore + mRadius;
+        //长度偏移量
         float longOffset = longPaddingBefore + mRadius;
+        //实际总长
+        float actualLongSize=(longSize - longPaddingBefore - longPaddingAfter) / 2.0f;
         if (mCentered) {
-            longOffset += ((longSize - longPaddingBefore - longPaddingAfter) / 2.0f) - ((count * threeRadius) / 2.0f);
+            longOffset += actualLongSize - ((count * threeRadius) / 2.0f);
         }
 
         float dX;
@@ -278,6 +279,7 @@ public class CirclePageIndicator extends View implements PageIndicator {
             return false;
         }
 
+        //应用多点操控
         final int action = ev.getAction() & MotionEventCompat.ACTION_MASK;
         switch (action) {
             case MotionEvent.ACTION_DOWN:
