@@ -21,7 +21,7 @@
         android:layout_alignParentRight="true"
         android:layout_marginRight="18dp"
         android:layout_marginTop="18dp"
-        android:background="@drawable/xadsdk_ad_mini"
+        android:background="@mipmap/xadsdk_ad_mini"
         />
 
     <Button
@@ -29,7 +29,7 @@
         android:layout_width="80dp"
         android:layout_height="80dp"
         android:layout_centerInParent="true"
-        android:background="@drawable/xadsdk_ad_play"
+        android:background="@mipmap/xadsdk_ad_play"
         android:visibility="gone"
         />
 

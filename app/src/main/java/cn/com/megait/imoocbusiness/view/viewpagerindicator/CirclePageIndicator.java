@@ -280,7 +280,8 @@ public class CirclePageIndicator extends View implements PageIndicator {
         }
 
         //应用多点操控
-        final int action = ev.getAction() & MotionEventCompat.ACTION_MASK;
+
+        final int action = ev.getAction() & MotionEvent.ACTION_MASK;
         switch (action) {
             case MotionEvent.ACTION_DOWN:
                 mActivePointerId = MotionEventCompat.getPointerId(ev, 0);
@@ -376,6 +377,7 @@ public class CirclePageIndicator extends View implements PageIndicator {
         setViewPager(view);
         setCurrentItem(initialPosition);
     }
+
 
     @Override
     public void setCurrentItem(int item) {

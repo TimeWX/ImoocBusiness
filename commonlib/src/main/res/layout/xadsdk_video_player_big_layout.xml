@@ -10,7 +10,7 @@
         android:layout_height="30dip"
         android:layout_marginLeft="24dp"
         android:layout_marginTop="24dp"
-        android:background="@drawable/xadsdk_ad_close"
+        android:background="@mipmap/xadsdk_ad_close"
         />
 
     <ImageView
@@ -27,7 +27,7 @@
         android:layout_width="80dp"
         android:layout_height="80dp"
         android:layout_centerInParent="true"
-        android:background="@drawable/xadsdk_ad_play"
+        android:background="@mipmap/xadsdk_ad_play"
         android:visibility="gone"
         />
 
