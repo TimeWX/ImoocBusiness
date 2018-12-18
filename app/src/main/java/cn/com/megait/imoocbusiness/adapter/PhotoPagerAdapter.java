@@ -19,7 +19,6 @@ import cn.com.megait.imoocbusiness.activity.GoodsDetailActivity;
  * @author lenovo
  * @function
  * @date 2018/11/27
- * TODO 了解相关方法
  */
 public class PhotoPagerAdapter extends PagerAdapter {
     private Context mContext;

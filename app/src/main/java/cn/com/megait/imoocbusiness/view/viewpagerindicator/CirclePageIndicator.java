@@ -25,7 +25,6 @@ import static android.graphics.Paint.ANTI_ALIAS_FLAG;
  * @author lenovo
  * @function
  * @date 2018/11/22
- * TODO 12.6 了解OnDraw onTouchEvent
  */
 public class CirclePageIndicator extends View implements PageIndicator {
     private static final int INVALID_POINTER = -1;
@@ -294,6 +293,7 @@ public class CirclePageIndicator extends View implements PageIndicator {
                 final float deltaX = x - mLastMotionX;
 
                 if (!mIsDragging) {
+                    //判断手指按下以及抬起间距大于TouchSlop(最小滑动参数)
                     if (Math.abs(deltaX) > mTouchSlop) {
                         mIsDragging = true;
                     }
@@ -301,7 +301,9 @@ public class CirclePageIndicator extends View implements PageIndicator {
 
                 if (mIsDragging) {
                     mLastMotionX = x;
+                    //ViewPager正在拖拽或者准备开始拖拽
                     if (mViewPager.isFakeDragging() || mViewPager.beginFakeDrag()) {
+                        //必须先执行beginFakeDrag
                         mViewPager.fakeDragBy(deltaX);
                     }
                 }
@@ -316,12 +318,13 @@ public class CirclePageIndicator extends View implements PageIndicator {
                     final int width = getWidth();
                     final float halfWidth = width / 2f;
                     final float sixthWidth = width / 6f;
-
+                    //判断手势抬起位置,当手指抬起点小于1/3时,可判断向左滑
                     if ((mCurrentPage > 0) && (ev.getX() < halfWidth - sixthWidth)) {
                         if (action != MotionEvent.ACTION_CANCEL) {
                             mViewPager.setCurrentItem(mCurrentPage - 1);
                         }
                         return true;
+                        //判断手势抬起位置,当手指抬起点大于2/3时,可判断向右滑
                     } else if ((mCurrentPage < count - 1) && (ev.getX() > halfWidth + sixthWidth)) {
                         if (action != MotionEvent.ACTION_CANCEL) {
                             mViewPager.setCurrentItem(mCurrentPage + 1);
@@ -329,7 +332,6 @@ public class CirclePageIndicator extends View implements PageIndicator {
                         return true;
                     }
                 }
-
                 mIsDragging = false;
                 mActivePointerId = INVALID_POINTER;
                 if (mViewPager.isFakeDragging()) mViewPager.endFakeDrag();
@@ -345,6 +347,7 @@ public class CirclePageIndicator extends View implements PageIndicator {
             case MotionEventCompat.ACTION_POINTER_UP:
                 final int pointerIndex = MotionEventCompat.getActionIndex(ev);
                 final int pointerId = MotionEventCompat.getPointerId(ev, pointerIndex);
+                //判断Move PointerId 和 Up PointerId是否相同
                 if (pointerId == mActivePointerId) {
                     final int newPointerIndex = pointerIndex == 0 ? 1 : 0;
                     mActivePointerId = MotionEventCompat.getPointerId(ev, newPointerIndex);
@@ -527,9 +530,7 @@ public class CirclePageIndicator extends View implements PageIndicator {
         return savedState;
     }
 
-    /**
-     * TODO 了解SavedState
-     */
+
      static class SavedState extends BaseSavedState {
         int currentPage;
 

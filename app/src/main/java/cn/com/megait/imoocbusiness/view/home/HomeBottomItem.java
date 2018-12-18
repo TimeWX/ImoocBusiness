@@ -18,7 +18,6 @@ import cn.com.megait.imoocbusiness.module.recommand.RecommandFooterValue;
  * @author lenovo
  * @function
  * @date 2018/11/28
- * TODO 需要去了解
  */
 public class HomeBottomItem extends RelativeLayout {
     private Context mContext;

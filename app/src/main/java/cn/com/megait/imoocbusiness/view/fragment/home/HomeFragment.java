@@ -88,6 +88,7 @@ public class HomeFragment extends BaseFragment implements AdapterView.OnItemClic
             //ListView添加头
             listView.addHeaderView(new HomeHeadLayout(mContext,mBaseRecommandModel.data.head));
 
+
         }
         //更新UI
     }
