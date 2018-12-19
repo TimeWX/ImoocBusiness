@@ -5,7 +5,7 @@ package cn.com.megait.commonlib.okhttp;
  * @function
  * @date 2018/11/7
  */
-public class HttpConstantS {
+public class HttpConstants {
 
     private static final String ROOT_URL = "";
     public static final String HOME_RECOMMAND = ROOT_URL + "";

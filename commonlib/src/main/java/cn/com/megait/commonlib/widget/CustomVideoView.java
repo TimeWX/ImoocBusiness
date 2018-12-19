@@ -32,7 +32,7 @@ import cn.com.megait.commonlib.constant.SDKConstants;
 import cn.com.megait.commonlib.core.AdParameters;
 
 /**
- * @author lenovo
+ * @author TimeW
  * @function
  * @date 2018/11/29
  * TODO 了解
@@ -45,7 +45,7 @@ public class CustomVideoView extends RelativeLayout implements View.OnClickListe
      */
     private static final String TAG = "MraidVideoView";
     private static final int TIME_MSG = 0x01;
-    private static final int TIME_INVAL = 1000;
+    private static final int TIME_MSG_DELAY = 1000;
     private static final int STATE_ERROR = -1;
     private static final int STATE_IDLE = 0;
     private static final int STATE_PLAYING = 1;
@@ -93,7 +93,7 @@ public class CustomVideoView extends RelativeLayout implements View.OnClickListe
                         //还可以在这里更新progressbar
                         //LogUtils.i(TAG, "TIME_MSG");
                         listener.onBufferUpdate(getCurrentPosition());
-                        sendEmptyMessageDelayed(TIME_MSG, TIME_INVAL);
+                        sendEmptyMessageDelayed(TIME_MSG, TIME_MSG_DELAY);
                     }
                     break;
             }

@@ -2,7 +2,7 @@ package cn.com.megait.commonlib.module.monitor;
 
 /**
  * @author lenovo
- * @function
+ * @function 监视器
  * @date 2018/11/21
  */
 public class Monitor {

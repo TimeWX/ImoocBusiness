@@ -1,7 +1,7 @@
 package cn.com.megait.imoocbusiness.network.http;
 
 import cn.com.megait.commonlib.okhttp.CommonOKHttpClient;
-import cn.com.megait.commonlib.okhttp.HttpConstantS;
+import cn.com.megait.commonlib.okhttp.HttpConstants;
 import cn.com.megait.commonlib.okhttp.listener.DisposeDataHandle;
 import cn.com.megait.commonlib.okhttp.listener.DisposeDataListener;
 import cn.com.megait.commonlib.okhttp.request.CommonRequest;
@@ -34,7 +34,7 @@ public class RequestCenter {
         RequestParams bodyParams=new RequestParams();
         bodyParams.put("username",username);
         bodyParams.put("pwd",pwd);
-        postRequest(HttpConstants.LOGIN,bodyParams,null,listener,User.class);
+        postRequest(cn.com.megait.imoocbusiness.network.http.HttpConstants.LOGIN,bodyParams,null,listener,User.class);
     }
 
     /**
@@ -42,6 +42,6 @@ public class RequestCenter {
      * @param listener
      */
     public static Call requestRecommandData(DisposeDataListener listener){
-        return postRequest(HttpConstantS.HOME_RECOMMAND,null,null,listener,BaseRecommandModel.class);
+        return postRequest(HttpConstants.HOME_RECOMMAND,null,null,listener,BaseRecommandModel.class);
     }
 }

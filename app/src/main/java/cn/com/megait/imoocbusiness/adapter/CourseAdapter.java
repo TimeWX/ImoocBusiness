@@ -17,7 +17,7 @@ import java.util.ArrayList;
 import cn.com.megait.commonlib.activity.AdBrowserActivity;
 import cn.com.megait.commonlib.adutil.ImageLoaderUtils;
 import cn.com.megait.commonlib.adutil.Utils;
-import cn.com.megait.commonlib.core.VideoAdContext;
+import cn.com.megait.commonlib.core.video.VideoAdContext;
 import cn.com.megait.imoocbusiness.R;
 import cn.com.megait.imoocbusiness.module.recommand.RecommandBodyValue;
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -120,7 +120,7 @@ public class CourseAdapter extends BaseAdapter {
                     break;
                 case ONE_TYPE:
                     mViewHolder = new ViewHolder();
-                    convertView = mInflate.inflate(R.layout.item_product_card_one_layout, parent, false);
+                    convertView = mLayoutInflater.inflate(R.layout.item_product_card_one_layout, parent, false);
                     mViewHolder.mLogoView = (CircleImageView) convertView.findViewById(R.id.item_logo_view);
                     mViewHolder.mTitleView = (TextView) convertView.findViewById(R.id.item_title_view);
                     mViewHolder.mInfoView = (TextView) convertView.findViewById(R.id.item_info_view);

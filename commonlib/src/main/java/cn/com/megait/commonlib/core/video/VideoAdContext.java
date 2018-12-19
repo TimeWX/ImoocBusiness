@@ -1,4 +1,4 @@
-package cn.com.megait.commonlib.core;
+package cn.com.megait.commonlib.core.video;
 
 /**
  * @author lenovo

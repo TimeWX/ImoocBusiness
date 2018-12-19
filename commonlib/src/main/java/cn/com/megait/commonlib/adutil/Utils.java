@@ -8,6 +8,7 @@ import android.graphics.drawable.BitmapDrawable;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Base64;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -151,5 +152,16 @@ public class Utils {
             return true;
         }
         return false;
+    }
+
+
+    public static boolean containString(String source,String target){
+        if(TextUtils.isEmpty(source) || TextUtils.isEmpty(target)){
+            return false;
+        }
+        if(!source.contains(target)){
+            return false;
+        }
+        return true;
     }
 }
