@@ -21,7 +21,7 @@ public class ReportManager {
     /**
      * 默认的事件回调处理
      */
-    private static DisposeDataHandle handle=new DisposeDataHandle(new DisposeDataListener() {
+    private static DisposeDataHandle handle = new DisposeDataHandle(new DisposeDataListener() {
         @Override
         public void onSuccess(Object responseObj) {
 
@@ -35,59 +35,60 @@ public class ReportManager {
 
     /**
      * send the sus monitor
+     *
      * @param monitors
      * @param isAuto
      */
-    public static void susReport(ArrayList<Monitor> monitors,boolean isAuto){
+    public static void susReport(ArrayList<Monitor> monitors, boolean isAuto) {
 
-        if(monitors!=null && monitors.size()>0){
-            for (Monitor monitor:monitors
-                 ) {
-                RequestParams params=new RequestParams();
-                if(Utils.containString(monitor.url, HttpConstants.ATM_PRE)){
-                    params.put("ve","0");
-                    if(isAuto){
-                        params.put("auto","1");
+        if (monitors != null && monitors.size() > 0) {
+            for (Monitor monitor : monitors
+                    ) {
+                RequestParams params = new RequestParams();
+                if (Utils.containString(monitor.url, HttpConstants.ATM_PRE)) {
+                    params.put("ve", "0");
+                    if (isAuto) {
+                        params.put("auto", "1");
                     }
                 }
-                CommonOKHttpClient.get(CommonRequest.createGetRequest(monitor.url,params),handle);
+                CommonOKHttpClient.get(CommonRequest.createMonitorRequest(monitor.url, params), handle);
             }
         }
     }
 
     /**
      * send the sueReport
+     *
      * @param monitors
      * @param isFull
      * @param playTime
      */
-    public static void sueReport(ArrayList<Monitor> monitors,boolean isFull, long playTime){
+    public static void sueReport(ArrayList<Monitor> monitors, boolean isFull, long playTime) {
 
-        if(monitors!=null && monitors.size()>0){
-            for (Monitor monitor:monitors
+        if (monitors != null && monitors.size() > 0) {
+            for (Monitor monitor : monitors
                     ) {
-                RequestParams params=new RequestParams();
-                if(Utils.containString(monitor.url, HttpConstants.ATM_PRE)){
-                    params.put("ve","0");
-                    if(isFull){
-                        params.put("fu","1");
+                RequestParams params = new RequestParams();
+                if (Utils.containString(monitor.url, HttpConstants.ATM_PRE)) {
+                    if (isFull) {
+                        params.put("fu", "1");
                     }
-                    params.put("ve",String.valueOf(playTime));
+                    params.put("ve", String.valueOf(playTime));
                 }
-                CommonOKHttpClient.get(CommonRequest.createGetRequest(monitor.url,params),handle);
+                CommonOKHttpClient.get(CommonRequest.createMonitorRequest(monitor.url, params), handle);
             }
         }
     }
 
-    public static void suReport(ArrayList<Monitor> monitors, long playTime){
-        if(monitors!=null && monitors.size()>0){
-            for (Monitor monitor:monitors
+    public static void suReport(ArrayList<Monitor> monitors, long playTime) {
+        if (monitors != null && monitors.size() > 0) {
+            for (Monitor monitor : monitors
                     ) {
-                RequestParams params=new RequestParams();
-                if(Utils.containString(monitor.url, HttpConstants.ATM_PRE)){
-                    params.put("ve",String.valueOf(playTime));
+                RequestParams params = new RequestParams();
+                if (Utils.containString(monitor.url, HttpConstants.ATM_PRE)) {
+                    params.put("ve", String.valueOf(playTime));
                 }
-                CommonOKHttpClient.get(CommonRequest.createGetRequest(monitor.url,params),handle);
+                CommonOKHttpClient.get(CommonRequest.createMonitorRequest(monitor.url, params), handle);
             }
         }
         /**
