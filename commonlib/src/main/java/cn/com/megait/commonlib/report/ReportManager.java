@@ -63,8 +63,35 @@ public class ReportManager {
      */
     public static void sueReport(ArrayList<Monitor> monitors,boolean isFull, long playTime){
 
+        if(monitors!=null && monitors.size()>0){
+            for (Monitor monitor:monitors
+                    ) {
+                RequestParams params=new RequestParams();
+                if(Utils.containString(monitor.url, HttpConstants.ATM_PRE)){
+                    params.put("ve","0");
+                    if(isFull){
+                        params.put("fu","1");
+                    }
+                    params.put("ve",String.valueOf(playTime));
+                }
+                CommonOKHttpClient.get(CommonRequest.createGetRequest(monitor.url,params),handle);
+            }
+        }
+    }
+
+    public static void suReport(ArrayList<Monitor> monitors, long playTime){
+        if(monitors!=null && monitors.size()>0){
+            for (Monitor monitor:monitors
+                    ) {
+                RequestParams params=new RequestParams();
+                if(Utils.containString(monitor.url, HttpConstants.ATM_PRE)){
+                    params.put("ve",String.valueOf(playTime));
+                }
+                CommonOKHttpClient.get(CommonRequest.createGetRequest(monitor.url,params),handle);
+            }
+        }
         /**
-         *  TODO Now-Coding
+         * TODO NOW_CODING
          */
     }
 }
