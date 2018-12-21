@@ -5,7 +5,9 @@ import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 
 import cn.com.megait.commonlib.R;
+import cn.com.megait.commonlib.constant.SDKConstants;
 import cn.com.megait.commonlib.module.AdValue;
+import cn.com.megait.commonlib.report.ReportManager;
 import cn.com.megait.commonlib.widget.CustomVideoView;
 
 /**
@@ -18,7 +20,6 @@ public class VideoAdSlot implements CustomVideoView.ADVideoPlayerListener {
     private CustomVideoView mCustomVideoView;
     private ViewGroup mParentView;
     private AdValue mAdValue;
-
     private AdSDKSlotListener mAdSDKSlotListener;
     private boolean isCanAutoPause;//是否可自动暂停标志位
     private int lastArea;//防止将要划入划出的播放器状态改变
@@ -56,16 +57,42 @@ public class VideoAdSlot implements CustomVideoView.ADVideoPlayerListener {
 
     }
 
+    /**
+     * 获取当前播放的时间(秒单位)
+     * @return
+     */
+    private long getCurrentPlayTime() {
+        // getCurrentPosition是以毫秒为单位,故需除去1000
+        return  mCustomVideoView.getCurrentPosition()/SDKConstants.MILLION_UNIT;
+    }
+
     @Override
     public void onBufferUpdate(int time) {
-
+        try {
+            ReportManager.suReport(mAdValue.middleMonitor,time/SDKConstants.MILLION_UNIT);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
     }
 
+    /**
+     * 实现Play层接口
+     */
     @Override
     public void onClickFullScreenBtn() {
 
+        try {
+            ReportManager.fullScreenReport(mAdValue.event.full.content,getCurrentPlayTime());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        /**
+         * TODO Now-Coding
+         */
     }
+
+
 
     @Override
     public void onClickVideo() {

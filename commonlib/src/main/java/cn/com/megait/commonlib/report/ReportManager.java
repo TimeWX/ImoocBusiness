@@ -57,7 +57,7 @@ public class ReportManager {
     }
 
     /**
-     * send the sueReport
+     * send the sue report
      *
      * @param monitors
      * @param isFull
@@ -80,7 +80,36 @@ public class ReportManager {
         }
     }
 
+
+    /**
+     * send the su reprot
+     *
+     * @param monitors
+     * @param playTime
+     */
     public static void suReport(ArrayList<Monitor> monitors, long playTime) {
+        if (monitors != null && monitors.size() > 0) {
+            for (Monitor monitor : monitors
+                    ) {
+                RequestParams params = new RequestParams();
+                if (monitor.time == playTime) {
+                    if (Utils.containString(monitor.url, HttpConstants.ATM_PRE)) {
+                        params.put("ve", String.valueOf(playTime));
+                    }
+                    CommonOKHttpClient.get(CommonRequest.createMonitorRequest(monitor.url, params), handle);
+                }
+
+            }
+        }
+
+    }
+
+    /**
+     * send the click full button monitor
+     * @param monitors
+     * @param playTime
+     */
+    public static void fullScreenReport(ArrayList<Monitor> monitors, long playTime) {
         if (monitors != null && monitors.size() > 0) {
             for (Monitor monitor : monitors
                     ) {
@@ -91,8 +120,5 @@ public class ReportManager {
                 CommonOKHttpClient.get(CommonRequest.createMonitorRequest(monitor.url, params), handle);
             }
         }
-        /**
-         * TODO NOW_CODING
-         */
     }
 }
