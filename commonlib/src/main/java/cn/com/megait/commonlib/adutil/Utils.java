@@ -155,6 +155,12 @@ public class Utils {
     }
 
 
+    /**
+     * 是否包含字符串
+     * @param source 源字符串
+     * @param target 目标字符串
+     * @return
+     */
     public static boolean containString(String source,String target){
         if(TextUtils.isEmpty(source) || TextUtils.isEmpty(target)){
             return false;
@@ -164,4 +170,6 @@ public class Utils {
         }
         return true;
     }
+
+
 }

@@ -1,10 +1,12 @@
 package cn.com.megait.commonlib.core.video;
 
 import android.content.Context;
+import android.os.Bundle;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 
 import cn.com.megait.commonlib.R;
+import cn.com.megait.commonlib.adutil.Utils;
 import cn.com.megait.commonlib.constant.SDKConstants;
 import cn.com.megait.commonlib.module.AdValue;
 import cn.com.megait.commonlib.report.ReportManager;
@@ -87,6 +89,9 @@ public class VideoAdSlot implements CustomVideoView.ADVideoPlayerListener {
         } catch (Exception e) {
             e.printStackTrace();
         }
+        Bundle bundle= Utils.getViewProperty(mParentView);
+        mParentView.removeView(mCustomVideoView);
+
         /**
          * TODO Now-Coding
          */
