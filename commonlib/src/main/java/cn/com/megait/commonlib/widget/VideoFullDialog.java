@@ -3,10 +3,19 @@ package cn.com.megait.commonlib.widget;
 import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
+import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
+import android.view.Window;
+import android.view.WindowManager;
+import android.view.animation.LinearInterpolator;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
+import cn.com.megait.commonlib.R;
+import cn.com.megait.commonlib.adutil.LogUtils;
+import cn.com.megait.commonlib.adutil.Utils;
+import cn.com.megait.commonlib.core.video.VideoAdSlot;
 import cn.com.megait.commonlib.module.AdValue;
 
 /**
@@ -17,9 +26,7 @@ import cn.com.megait.commonlib.module.AdValue;
 public class VideoFullDialog extends Dialog implements CustomVideoView.ADVideoPlayerListener {
 
 
-
-
-    private static final String TAG=VideoFullDialog.class.getSimpleName();
+    private static final String TAG = VideoFullDialog.class.getSimpleName();
     private CustomVideoView mCustomVideoView;
     private Context mContext;
     private RelativeLayout mRootView;
@@ -28,17 +35,115 @@ public class VideoFullDialog extends Dialog implements CustomVideoView.ADVideoPl
     private AdValue mAdValue;
     private int mPosition;
     private FullToSmallListener mListener;
+    private VideoAdSlot.AdSDKSlotListener mAdSDKSlotListener;
     private Bundle mStartBundle;
     private Bundle mEndBundle;//用于Dialog出入场动画
+    private int deltaY;
+    private boolean isFirst = true;
 
 
     public VideoFullDialog(Context context, CustomVideoView customVideoView, AdValue adValue, int position) {
         super(context);
+        mContext = context;
         mCustomVideoView = customVideoView;
         mAdValue = adValue;
         mPosition = position;
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS, WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        setContentView(R.layout.xadsdk_dialog_video_layout);
+        initVideoView();
+    }
+
+    public void setViewBundle(Bundle bundle) {
+        mStartBundle = bundle;
+    }
+
+    public void setListener(FullToSmallListener listener) {
+        mListener = listener;
+    }
+
+    public void setAdSDKSlotListener(VideoAdSlot.AdSDKSlotListener adSDKSlotListener) {
+        mAdSDKSlotListener = adSDKSlotListener;
+    }
+
+    private void initVideoView() {
+        mParentView = findViewById(R.id.content_layout);
+        mBackButton = findViewById(R.id.xadsdk_player_close_btn);
+        mBackButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onClickBackBtn();
+            }
+        });
+        mRootView = findViewById(R.id.root_view);
+        mRootView.setVisibility(View.INVISIBLE);
+        mCustomVideoView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onClickVideo();
+            }
+        });
+        mCustomVideoView.mute(false);
+        mParentView.addView(mCustomVideoView);
+        mParentView.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
+            @Override
+            public boolean onPreDraw() {
+                mParentView.getViewTreeObserver().removeOnPreDrawListener(this);
+                prepareSceneData();
+                runEnterAniamtion();
+                return true;
+            }
+        });
+
+    }
+
+    /**
+     * 准备动画所需数据
+     */
+    private void prepareSceneData() {
+        mEndBundle = Utils.getViewProperty(mCustomVideoView);
+        //将destationview 移动到 originalview
+        deltaY = mStartBundle.getInt(Utils.PROPNAME_SCREENLOCATION_TOP) - mEndBundle.getInt(Utils.PROPNAME_SCREENLOCATION_TOP);
+        mCustomVideoView.setTranslationY(deltaY);
+    }
+
+    private void runEnterAniamtion() {
+        mCustomVideoView.animate()
+                .setDuration(200)
+                .setInterpolator(new LinearInterpolator())
+                .translationY(0)
+                .withStartAction(new Runnable() {
+                    @Override
+                    public void run() {
+                        mRootView.setVisibility(View.VISIBLE);
+                    }
+                })
+                .start();
+
+    }
+
+    @Override
+    public void onWindowFocusChanged(boolean hasFocus) {
+        LogUtils.i(TAG, "onWindowFocusChanged");
+        mCustomVideoView.isShowFullBtn(false);//防止第一次,有些手机仍然显示全屏按钮
+        if (!hasFocus) {
+            mPosition = mCustomVideoView.getCurrentPosition();
+            mCustomVideoView.pauseForFullScreen();//准备全屏
+        } else {
+            if (isFirst) {//为了适配某些手机不执行seekAndResume中的播放方法
+                mCustomVideoView.seekAndResume(mPosition);
+            } else {
+                mCustomVideoView.resume();
+            }
+        }
+        isFirst = false;
         /**
-         * TODO Now-Coding
+         * TOOD Now-Coding
          */
     }
 
@@ -82,9 +187,11 @@ public class VideoFullDialog extends Dialog implements CustomVideoView.ADVideoPl
 
     }
 
-    public interface FullToSmallListener{
+
+    public interface FullToSmallListener {
         /**
          * 获取当前播放位置
+         *
          * @param position 当前播放位置
          */
         void getCurrentPlayPosition(int position);
