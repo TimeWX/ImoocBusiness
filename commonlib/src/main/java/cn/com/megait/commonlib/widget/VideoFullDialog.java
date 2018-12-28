@@ -3,6 +3,7 @@ package cn.com.megait.commonlib.widget;
 import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
@@ -15,8 +16,10 @@ import android.widget.RelativeLayout;
 import cn.com.megait.commonlib.R;
 import cn.com.megait.commonlib.adutil.LogUtils;
 import cn.com.megait.commonlib.adutil.Utils;
+import cn.com.megait.commonlib.constant.SDKConstants;
 import cn.com.megait.commonlib.core.video.VideoAdSlot;
 import cn.com.megait.commonlib.module.AdValue;
+import cn.com.megait.commonlib.report.ReportManager;
 
 /**
  * @author lenovo
@@ -142,23 +145,41 @@ public class VideoFullDialog extends Dialog implements CustomVideoView.ADVideoPl
             }
         }
         isFirst = false;
-        /**
-         * TOOD Now-Coding
-         */
     }
 
     @Override
     public void onBufferUpdate(int time) {
-
+        try{
+            if(mAdValue!=null){
+                ReportManager.suReport(mAdValue.middleMonitor,time/SDKConstants.MILLION_UNIT);
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
     }
 
     @Override
     public void onClickFullScreenBtn() {
 
+        onClickVideo();;
     }
 
     @Override
     public void onClickVideo() {
+
+        String destinationUrl=mAdValue.clickUrl;
+        if(mAdSDKSlotListener!=null){
+            if(mCustomVideoView.isFrameHidden() && !TextUtils.isEmpty(destinationUrl)){
+                mAdSDKSlotListener.onClickVideo(destinationUrl);
+            }
+            try{
+                ReportManager.pauseVideoReport(mAdValue.clickMonitor,mCustomVideoView.getCurrentPosition());
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+        }else {
+
+        }
 
     }
 

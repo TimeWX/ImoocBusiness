@@ -205,6 +205,10 @@ public class CustomVideoView extends RelativeLayout implements View.OnClickListe
         return false;
     }
 
+    /**
+     *
+     * @return
+     */
     public boolean isFrameHidden() {
         return mFrameView.getVisibility() == View.VISIBLE ? false : true;
     }

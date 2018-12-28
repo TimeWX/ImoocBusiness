@@ -121,4 +121,16 @@ public class ReportManager {
             }
         }
     }
+
+    public static void pauseVideoReport(ArrayList<Monitor> monitors,long playTime){
+        if(monitors!=null && monitors.size()>0){
+            for(Monitor monitor:monitors){
+                RequestParams params=new RequestParams();
+                if(Utils.containString(monitor.url,HttpConstants.ATM_PRE)){
+                    params.put("ve",String.valueOf(playTime));
+                }
+                CommonOKHttpClient.get(CommonRequest.createMonitorRequest(monitor.url,params),handle);
+            }
+        }
+    }
 }
