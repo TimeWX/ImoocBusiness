@@ -128,7 +128,7 @@ public class CustomVideoView extends RelativeLayout implements View.OnClickListe
         mPlayerView = (RelativeLayout) inflater.inflate(R.layout.xadsdk_video_player, this);//加载PlayerView,并处于本RelativeLayout中
         mVideoView = mPlayerView.findViewById(R.id.xadsdk_player_video_textureView);
         mVideoView.setOnClickListener(this);
-        mVideoView.setKeepScreenOn(true);//保持屏幕唱亮
+        mVideoView.setKeepScreenOn(true);//保持屏幕长亮
         mVideoView.setSurfaceTextureListener(this);
         initSmallLayoutMode(); //init the small mode
     }
@@ -337,6 +337,9 @@ public class CustomVideoView extends RelativeLayout implements View.OnClickListe
         mFrameURI = url;
     }
 
+    /**
+     * 加载
+     */
     public void load() {
         if (this.playerState != STATE_IDLE) {
             return;
@@ -355,6 +358,9 @@ public class CustomVideoView extends RelativeLayout implements View.OnClickListe
         }
     }
 
+    /**
+     * 暂停
+     */
     public void pause() {
         if (this.playerState != STATE_PLAYING) {
             return;
@@ -489,6 +495,9 @@ public class CustomVideoView extends RelativeLayout implements View.OnClickListe
         this.showPauseMode(false);
     }
 
+    /**
+     * 停止
+     */
     public void stop() {
         LogUtils.d(TAG, " do stop");
         if (this.mediaPlayer != null) {
@@ -509,6 +518,9 @@ public class CustomVideoView extends RelativeLayout implements View.OnClickListe
         }
     }
 
+    /**
+     * 销毁
+     */
     public void destroy() {
         LogUtils.d(TAG, " do destroy");
         if (this.mediaPlayer != null) {
@@ -561,8 +573,8 @@ public class CustomVideoView extends RelativeLayout implements View.OnClickListe
     }
 
     /**
-     * 暂停模式是否显示
-     * @param show true,显示;false,隐藏
+     * 暂停模式是否开启
+     * @param show true,开启;false,关闭
      */
     private void showPauseMode(boolean show) {
         //暂停模式下,全屏按钮隐藏,播放按钮显示,加载图画Clear并隐藏

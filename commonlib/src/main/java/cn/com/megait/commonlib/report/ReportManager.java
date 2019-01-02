@@ -122,6 +122,11 @@ public class ReportManager {
         }
     }
 
+    /**
+     * send the video pause monitor
+     * @param monitors
+     * @param playTime
+     */
     public static void pauseVideoReport(ArrayList<Monitor> monitors,long playTime){
         if(monitors!=null && monitors.size()>0){
             for(Monitor monitor:monitors){
