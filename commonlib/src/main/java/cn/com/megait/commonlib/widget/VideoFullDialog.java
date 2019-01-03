@@ -64,6 +64,13 @@ public class VideoFullDialog extends Dialog implements CustomVideoView.ADVideoPl
         initVideoView();
     }
 
+    @Override
+    public void dismiss() {
+        LogUtils.i(TAG,"dismiss");
+        mParentView.removeView(mParentView);
+        super.dismiss();
+    }
+
     public void setViewBundle(Bundle bundle) {
         mStartBundle = bundle;
     }
@@ -100,7 +107,7 @@ public class VideoFullDialog extends Dialog implements CustomVideoView.ADVideoPl
             public boolean onPreDraw() {
                 mParentView.getViewTreeObserver().removeOnPreDrawListener(this);
                 prepareSceneData();
-                runEnterAniamtion();
+                runEnterAnimation();
                 return true;
             }
         });
@@ -117,7 +124,10 @@ public class VideoFullDialog extends Dialog implements CustomVideoView.ADVideoPl
         mCustomVideoView.setTranslationY(deltaY);
     }
 
-    private void runEnterAniamtion() {
+    /**
+     * 入场动画
+     */
+    private void runEnterAnimation() {
         mCustomVideoView.animate()
                 .setDuration(200)
                 .setInterpolator(new LinearInterpolator())
@@ -129,8 +139,34 @@ public class VideoFullDialog extends Dialog implements CustomVideoView.ADVideoPl
                     }
                 })
                 .start();
-
     }
+
+    /**
+     * 退出动画
+     */
+    private void runExitAnimation(){
+        mCustomVideoView.animate()
+                .setDuration(200)
+                .setInterpolator(new LinearInterpolator())
+                .translationY(deltaY)
+                .withEndAction(new Runnable() {
+                    @Override
+                    public void run() {
+                        dismiss();
+                        try {
+                            ReportManager.exitFullScreenReport(mAdValue.event.exitFull.content,
+                                    mCustomVideoView.getCurrentPosition()/SDKConstants.MILLION_UNIT);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                        if(mListener!=null){
+                            mListener.getCurrentPlayPosition(mCustomVideoView.getCurrentPosition());
+                        }
+                    }
+                }).start();
+    }
+
+
 
     @Override
     public void onWindowFocusChanged(boolean hasFocus) {
@@ -162,9 +198,7 @@ public class VideoFullDialog extends Dialog implements CustomVideoView.ADVideoPl
 
     @Override
     public void onClickFullScreenBtn() {
-
         onClickVideo();
-        ;
     }
 
     @Override
@@ -198,27 +232,39 @@ public class VideoFullDialog extends Dialog implements CustomVideoView.ADVideoPl
 
     @Override
     public void onClickBackBtn() {
-
+        runExitAnimation();
     }
 
     @Override
     public void onClickPlay() {
+
 
     }
 
     @Override
     public void onAdVideoLoadSuccess() {
 
+        if(mCustomVideoView!=null)
+            mCustomVideoView.resume();
     }
 
     @Override
     public void onAdVideoLoadFailed() {
-
     }
 
     @Override
     public void onAdVideoLoadComplete() {
-
+        try {
+            //获取当前播放进度
+            int position=mCustomVideoView.getDuration()/SDKConstants.MILLION_UNIT;
+            ReportManager.sueReport(mAdValue.endMonitor,true,position);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        dismiss();
+        if(mListener!=null){
+            mListener.playComplete();
+        }
     }
 
 

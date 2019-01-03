@@ -400,6 +400,10 @@ public class CustomVideoView extends RelativeLayout implements View.OnClickListe
         return 0;
     }
 
+    /**
+     * 获取播放持续时间
+     * @return
+     */
     public int getDuration() {
         if (mediaPlayer != null) {
             return mediaPlayer.getDuration();
