@@ -7,7 +7,7 @@ import cn.com.megait.commonlib.module.monitor.emevent.EMEvent;
 import cn.com.megait.imoocbusiness.module.BaseModel;
 
 /**
- * @author lenovo
+ * @author TimeW
  * @function
  * @date 2018/11/21
  */

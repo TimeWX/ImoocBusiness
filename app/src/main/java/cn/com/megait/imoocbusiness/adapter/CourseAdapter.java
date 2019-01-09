@@ -18,6 +18,7 @@ import cn.com.megait.commonlib.activity.AdBrowserActivity;
 import cn.com.megait.commonlib.adutil.ImageLoaderUtils;
 import cn.com.megait.commonlib.adutil.Utils;
 import cn.com.megait.commonlib.core.video.VideoAdContext;
+import cn.com.megait.commonlib.core.video.VideoAdSlot;
 import cn.com.megait.imoocbusiness.R;
 import cn.com.megait.imoocbusiness.module.recommand.RecommandBodyValue;
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -41,6 +42,7 @@ public class CourseAdapter extends BaseAdapter {
     private LayoutInflater mLayoutInflater;
     private ImageLoaderUtils mImageLoaderUtils;
     private ViewHolder mViewHolder;
+    private VideoAdContext mAdsdkContext;
 
 
 

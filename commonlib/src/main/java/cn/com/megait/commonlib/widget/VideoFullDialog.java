@@ -25,7 +25,7 @@ import cn.com.megait.commonlib.report.ReportManager;
 
 /**
  * @author lenovo
- * @function
+ * @function 视频全屏播放框
  * @date 2018/12/24
  */
 public class VideoFullDialog extends Dialog implements CustomVideoView.ADVideoPlayerListener {

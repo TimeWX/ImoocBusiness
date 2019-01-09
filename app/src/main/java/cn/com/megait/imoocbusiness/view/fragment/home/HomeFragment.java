@@ -1,6 +1,7 @@
 package cn.com.megait.imoocbusiness.view.fragment.home;
 
 import android.content.Intent;
+
 import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -20,8 +21,11 @@ import butterknife.Unbinder;
 import cn.com.megait.commonlib.okhttp.listener.DisposeDataListener;
 import cn.com.megait.commonlib.zxing.app.CaptureActivity;
 import cn.com.megait.imoocbusiness.R;
+import cn.com.megait.imoocbusiness.activity.SearchActivity;
+import cn.com.megait.imoocbusiness.adapter.CourseAdapter;
 import cn.com.megait.imoocbusiness.constant.Constants;
 import cn.com.megait.imoocbusiness.module.recommand.BaseRecommandModel;
+import cn.com.megait.imoocbusiness.module.recommand.RecommandBodyValue;
 import cn.com.megait.imoocbusiness.network.http.RequestCenter;
 import cn.com.megait.imoocbusiness.util.Util;
 import cn.com.megait.imoocbusiness.view.fragment.BaseFragment;
@@ -43,6 +47,7 @@ public class HomeFragment extends BaseFragment implements AdapterView.OnItemClic
     Unbinder unbinder;
     private View mContentView;
     private BaseRecommandModel mBaseRecommandModel;
+    private CourseAdapter mAdapter;
 
     private static final int REQUEST_QRCODE = 0X01;
 
@@ -87,6 +92,7 @@ public class HomeFragment extends BaseFragment implements AdapterView.OnItemClic
             listView.setVisibility(View.VISIBLE);
             //ListView添加头
             listView.addHeaderView(new HomeHeadLayout(mContext,mBaseRecommandModel.data.head));
+
 
 
         }
@@ -146,6 +152,9 @@ public class HomeFragment extends BaseFragment implements AdapterView.OnItemClic
                 break;
             //搜索
             case R.id.search_view:
+                //跳转到搜索界面
+                Intent intent=new Intent(mContext,SearchActivity.class);
+                mContext.startActivity(intent);
                 break;
         }
     }
@@ -153,6 +162,7 @@ public class HomeFragment extends BaseFragment implements AdapterView.OnItemClic
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
+        RecommandBodyValue value=
 
 
     }

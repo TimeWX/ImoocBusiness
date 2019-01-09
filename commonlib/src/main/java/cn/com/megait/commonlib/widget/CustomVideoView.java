@@ -33,7 +33,7 @@ import cn.com.megait.commonlib.core.AdParameters;
 
 /**
  * @author TimeW
- * @function
+ * @function 自定义视频播放器
  * @date 2018/11/29
  * TODO 了解
  */

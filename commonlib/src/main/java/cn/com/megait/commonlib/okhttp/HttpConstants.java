@@ -21,7 +21,7 @@ public class HttpConstants {
 
     //广告数据返回成功
     public static final String AD_DATA_SUCCESS = "200";
-    //广告数据解析失败
+    //广告数据解析失败,(已接受)服务器已接受请求，但尚未处理。
     public static final String AD_DATA_FAILED = "202";
     //广告加载成功
     public static final String AD_PLAY_SUCCESS = "300";

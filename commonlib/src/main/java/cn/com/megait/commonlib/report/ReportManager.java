@@ -155,4 +155,19 @@ public class ReportManager {
             }
         }
     }
+
+    /**
+     *
+     * @param isPad
+     * @param sid
+     * @param ie
+     * @param appVersion
+     * @param step
+     * @param result
+     */
+    public static void  sendAdMonitor(boolean isPad,String sid,String ie,String appVersion,HttpConstants.Params step,String result){
+        /**
+         * TODO Now-Coding
+         */
+    }
 }
