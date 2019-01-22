@@ -162,7 +162,12 @@ public class HomeFragment extends BaseFragment implements AdapterView.OnItemClic
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-        RecommandBodyValue value=
+        RecommandBodyValue value= (RecommandBodyValue) mAdapter.getItem(position-listView.getHeaderViewsCount());
+        if(value.type !=0){
+
+        }
+
+
 
 
     }
