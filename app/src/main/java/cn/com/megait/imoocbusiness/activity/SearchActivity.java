@@ -214,16 +214,16 @@ public class SearchActivity extends BaseActivity implements AdapterView.OnItemCl
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        Intent intent = new Intent(this, GoodsDetailActivity.class);
+        Intent intent = new Intent(this, CourseDetailActivity.class);
         switch (parent.getId()) {
             case R.id.goods_list_view:
                 goodsModel = (GoodsModel) searchAdapter.getItem(position);
-                intent.putExtra(GoodsDetailActivity.DETAIL_GOODS_CODE, goodsModel.goodscode);
+                intent.putExtra(CourseDetailActivity.COURSE_ID, goodsModel.goodscode);
                 startActivity(intent);
                 break;
             case R.id.history_list_view:
                 goodsModel = (GoodsModel) historyAdapter.getItem(position);
-                intent.putExtra(GoodsDetailActivity.DETAIL_GOODS_CODE, goodsModel.goodscode);
+                intent.putExtra(CourseDetailActivity.COURSE_ID, goodsModel.goodscode);
                 insertHistoryTable(goodsModel.goodscode);
                 startActivity(intent);
                 break;

@@ -8,7 +8,6 @@ import cn.com.megait.commonlib.adutil.LogUtils;
 import cn.com.megait.commonlib.core.AdContextInteface;
 import cn.com.megait.commonlib.module.AdValue;
 import cn.com.megait.commonlib.okhttp.HttpConstants;
-import cn.com.megait.commonlib.report.ReportManager;
 import cn.com.megait.commonlib.widget.CustomVideoView;
 
 /**
@@ -61,7 +60,7 @@ public class VideoAdContext implements VideoAdSlot.AdSDKSlotListener {
      * @param adDataSuccess 发送解析事件码:"200","202"
      */
     private void sendAnalizeReport(HttpConstants.Params ad_analize, String adDataSuccess) {
-        ReportManager.
+
     }
 
     @Override
@@ -87,5 +86,9 @@ public class VideoAdContext implements VideoAdSlot.AdSDKSlotListener {
     @Override
     public void onClickVideo(String url) {
 
+    }
+
+    public void setAdResultListener(AdContextInteface listener) {
+        this.mListener = listener;
     }
 }

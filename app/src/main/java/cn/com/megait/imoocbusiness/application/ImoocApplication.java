@@ -2,6 +2,10 @@ package cn.com.megait.imoocbusiness.application;
 
 import android.app.Application;
 
+import com.mob.MobSDK;
+
+import cn.sharesdk.framework.ShareSDK;
+
 /**
  * @author lenovo
  * @function
@@ -25,6 +29,8 @@ public class ImoocApplication extends Application {
     }
 
     public void initShareSDK(){
+        MobSDK.init(this);
+
 
     }
 

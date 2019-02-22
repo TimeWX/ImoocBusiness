@@ -29,6 +29,19 @@ public class ShareDialog extends Dialog implements View.OnClickListener {
     private boolean isShowDownload;
     private DisplayMetrics mDisplayMetrics;
 
+    /**
+     * share relative
+     */
+    private int mShareType; //指定分享类型
+    private String mShareTitle; //指定分享内容标题
+    private String mShareText; //指定分享内容文本
+    private String mSharePhoto; //指定分享本地图片
+    private String mShareTileUrl;
+    private String mShareSiteUrl;
+    private String mShareSite;
+    private String mUrl;
+    private String mResourceUrl;
+
     public ShareDialog(Context context, boolean isShowDownload) {
         super(context);
         mContext = context;
@@ -79,5 +92,41 @@ public class ShareDialog extends Dialog implements View.OnClickListener {
             case R.id.tv_cancel:
                 break;
         }
+    }
+
+    public void setResourceUrl(String resourceUrl) {
+        mResourceUrl = resourceUrl;
+    }
+
+    public void setShareTitle(String title) {
+        mShareTitle = title;
+    }
+
+    public void setImagePhoto(String photo) {
+        mSharePhoto = photo;
+    }
+
+    public void setShareType(int type) {
+        mShareType = type;
+    }
+
+    public void setShareSite(String site) {
+        mShareSite = site;
+    }
+
+    public void setShareTitleUrl(String titleUrl) {
+        mShareTileUrl = titleUrl;
+    }
+
+    public void setUrl(String url) {
+        mUrl = url;
+    }
+
+    public void setShareSiteUrl(String siteUrl) {
+        mShareSiteUrl = siteUrl;
+    }
+
+    public void setShareText(String text) {
+        mShareText = text;
     }
 }

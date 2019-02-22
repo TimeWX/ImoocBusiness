@@ -26,9 +26,9 @@ import cn.com.megait.imoocbusiness.util.Util;
  * @function 展示商品详情, 此启动模式为SingleTop
  * @date 2018/11/2
  */
-public class GoodsDetailActivity extends BaseActivity implements AdapterView.OnItemClickListener {
+public class CourseDetailActivity extends BaseActivity implements AdapterView.OnItemClickListener {
 
-    public static final String DETAIL_GOODS_CODE = "goodscode";
+    public static final String COURSE_ID = "course_id";
     @BindView(R.id.back_view)
     ImageView backView;
     @BindView(R.id.title_layout)
@@ -94,7 +94,7 @@ public class GoodsDetailActivity extends BaseActivity implements AdapterView.OnI
 
     private void initData() {
         Intent intent = getIntent();
-        courseId = intent.getStringExtra(DETAIL_GOODS_CODE);
+        courseId = intent.getStringExtra(COURSE_ID);
     }
 
     @Override
@@ -108,6 +108,7 @@ public class GoodsDetailActivity extends BaseActivity implements AdapterView.OnI
     }
 
     private void requestDetail() {
+        
     }
 
     @OnClick({R.id.back_view, R.id.jianpan_view, R.id.send_view})

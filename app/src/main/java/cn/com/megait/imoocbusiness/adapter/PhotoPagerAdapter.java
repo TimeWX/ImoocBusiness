@@ -13,7 +13,7 @@ import java.util.ArrayList;
 
 
 import cn.com.megait.commonlib.adutil.ImageLoaderUtils;
-import cn.com.megait.imoocbusiness.activity.GoodsDetailActivity;
+import cn.com.megait.imoocbusiness.activity.CourseDetailActivity;
 
 /**
  * @author lenovo
@@ -51,7 +51,7 @@ public class PhotoPagerAdapter extends PagerAdapter {
                 @Override
                 public void onClick(View v) {
                     Intent intent = new Intent(mContext,
-                            GoodsDetailActivity.class);
+                            CourseDetailActivity.class);
                     mContext.startActivity(intent);
                 }
             });

@@ -12,17 +12,26 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
+
 import java.util.ArrayList;
 
 import cn.com.megait.commonlib.activity.AdBrowserActivity;
 import cn.com.megait.commonlib.adutil.ImageLoaderUtils;
 import cn.com.megait.commonlib.adutil.Utils;
+import cn.com.megait.commonlib.core.AdContextInteface;
 import cn.com.megait.commonlib.core.video.VideoAdContext;
-import cn.com.megait.commonlib.core.video.VideoAdSlot;
 import cn.com.megait.imoocbusiness.R;
+import cn.com.megait.imoocbusiness.activity.PhotoViewActivity;
 import cn.com.megait.imoocbusiness.module.recommand.RecommandBodyValue;
+import cn.com.megait.imoocbusiness.share.ShareDialog;
+import cn.com.megait.imoocbusiness.util.Util;
+import cn.sharesdk.framework.Platform;
 import de.hdodenhof.circleimageview.CircleImageView;
-import okhttp3.internal.Platform;
+
+
+
+
 
 /**
  * @author lenovo
@@ -103,7 +112,7 @@ public class CourseAdapter extends BaseAdapter {
                     //为对应布局创建播放器
                     mAdsdkContext = new VideoAdContext(mViewHolder.mVieoContentLayout,
                             new Gson().toJson(value), null);
-                    mAdsdkContext.setAdResultListener(new AdContextInterface() {
+                    mAdsdkContext.setAdResultListener(new AdContextInteface() {
                         @Override
                         public void onAdSuccess() {
                         }
@@ -144,9 +153,9 @@ public class CourseAdapter extends BaseAdapter {
                     mViewHolder.mFromView = (TextView) convertView.findViewById(R.id.item_from_view);
                     mViewHolder.mZanView = (TextView) convertView.findViewById(R.id.item_zan_view);
                     break;
-                case CARD_TYPE_THREE:
+                case THREE_TYPE:
                     mViewHolder = new ViewHolder();
-                    convertView = mInflate.inflate(R.layout.item_product_card_three_layout, null, false);
+                    convertView = mLayoutInflater.inflate(R.layout.item_product_card_three_layout, null, false);
                     mViewHolder.mViewPager = (ViewPager) convertView.findViewById(R.id.pager);
                     //add data
                     ArrayList<RecommandBodyValue> recommandList = Util.handleData(value);
@@ -167,7 +176,7 @@ public class CourseAdapter extends BaseAdapter {
                 mViewHolder.mTitleView.setText(value.title);
                 mViewHolder.mInfoView.setText(value.info.concat(mContext.getString(R.string.tian_qian)));
                 mViewHolder.mFooterView.setText(value.text);
-                mViewHolder.mShareView.setOnClickListener(new OnClickListener() {
+                mViewHolder.mShareView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         ShareDialog dialog = new ShareDialog(mContext, false);
@@ -182,15 +191,15 @@ public class CourseAdapter extends BaseAdapter {
                     }
                 });
                 break;
-            case CARD_TYPE_ONE:
-                mImagerLoader.displayImage(mViewHolder.mLogoView, value.logo);
+            case ONE_TYPE:
+                mImageLoaderUtils.displayImage(mViewHolder.mLogoView, value.logo);
                 mViewHolder.mTitleView.setText(value.title);
                 mViewHolder.mInfoView.setText(value.info.concat(mContext.getString(R.string.tian_qian)));
                 mViewHolder.mFooterView.setText(value.text);
                 mViewHolder.mPriceView.setText(value.price);
                 mViewHolder.mFromView.setText(value.from);
                 mViewHolder.mZanView.setText(mContext.getString(R.string.dian_zan).concat(value.zan));
-                mViewHolder.mProductLayout.setOnClickListener(new OnClickListener() {
+                mViewHolder.mProductLayout.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         Intent intent = new Intent(mContext, PhotoViewActivity.class);
@@ -204,8 +213,8 @@ public class CourseAdapter extends BaseAdapter {
                     mViewHolder.mProductLayout.addView(createImageView(url));
                 }
                 break;
-            case CARD_TYPE_TWO:
-                mImagerLoader.displayImage(mViewHolder.mLogoView, value.logo);
+            case TWO_TYPE:
+                mImageLoaderUtils.displayImage(mViewHolder.mLogoView, value.logo);
                 mViewHolder.mTitleView.setText(value.title);
                 mViewHolder.mInfoView.setText(value.info.concat(mContext.getString(R.string.tian_qian)));
                 mViewHolder.mFooterView.setText(value.text);
@@ -213,12 +222,24 @@ public class CourseAdapter extends BaseAdapter {
                 mViewHolder.mFromView.setText(value.from);
                 mViewHolder.mZanView.setText(mContext.getString(R.string.dian_zan).concat(value.zan));
                 //为单个ImageView加载远程图片
-                mImagerLoader.displayImage(mViewHolder.mProductView, value.url.get(0));
+                mImageLoaderUtils.displayImage(mViewHolder.mProductView, value.url.get(0));
                 break;
-            case CARD_TYPE_THREE:
+            case THREE_TYPE:
                 break;
         }
         return convertView;
+    }
+
+    //动态添加ImageView
+    private ImageView createImageView(String url) {
+        ImageView photoView = new ImageView(mContext);
+        LinearLayout.LayoutParams params = new LinearLayout.
+                LayoutParams(Utils.dip2px(mContext, 100),
+                LinearLayout.LayoutParams.MATCH_PARENT);
+        params.leftMargin = Utils.dip2px(mContext, 5);
+        photoView.setLayoutParams(params);
+        mImageLoaderUtils.displayImage(photoView, url);
+        return photoView;
     }
 
     private static class  ViewHolder{
@@ -242,4 +263,8 @@ public class CourseAdapter extends BaseAdapter {
         private ViewPager mViewPager;
 
     }
+
+    /**
+     * TODO Now-Coding
+     */
 }
