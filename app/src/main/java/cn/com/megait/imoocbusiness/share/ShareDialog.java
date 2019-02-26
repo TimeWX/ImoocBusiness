@@ -11,9 +11,13 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.RelativeLayout;
 
+import java.util.HashMap;
+
 import butterknife.BindView;
 import butterknife.OnClick;
 import cn.com.megait.imoocbusiness.R;
+import cn.sharesdk.framework.Platform;
+import cn.sharesdk.framework.PlatformActionListener;
 
 /**
  * @author lenovo
@@ -37,8 +41,8 @@ public class ShareDialog extends Dialog implements View.OnClickListener {
     private String mShareText; //指定分享内容文本
     private String mSharePhoto; //指定分享本地图片
     private String mShareTileUrl;
-    private String mShareSiteUrl;
-    private String mShareSite;
+    private String mShareSiteUrl;//分享的来源地址
+    private String mShareSite;//分享的来源
     private String mUrl;
     private String mResourceUrl;
 
@@ -84,6 +88,7 @@ public class ShareDialog extends Dialog implements View.OnClickListener {
             case R.id.rl_moment_layout:
                 break;
             case R.id.rl_qq_layout:
+                share(ShareManager.PlatFormType.QQ);
                 break;
             case R.id.rl_qqzone_layout:
                 break;
@@ -93,6 +98,49 @@ public class ShareDialog extends Dialog implements View.OnClickListener {
                 break;
         }
     }
+
+
+
+    /**
+     * 分享
+     * @param platFormType
+     */
+    private void share(ShareManager.PlatFormType platFormType){
+
+        ShareData shareData=new ShareData();
+        Platform.ShareParams shareParams=new Platform.ShareParams();
+        shareParams.setShareType(mShareType);
+        shareParams.setTitle(mShareTitle);
+        shareParams.setTitleUrl(mShareTileUrl);
+        shareParams.setText(mShareText);
+        shareParams.setImagePath(mSharePhoto);
+        shareParams.setSite(mShareSite);
+        shareParams.setSiteUrl(mShareSiteUrl);
+        shareParams.setUrl(mUrl);
+        shareData.params=shareParams;
+        shareData.platFormType=platFormType;
+        ShareManager.getInstance().shareData(shareData,mListener);
+    }
+
+    /**
+     * 定义的平台回调接口
+     */
+    private PlatformActionListener mListener=new PlatformActionListener() {
+        @Override
+        public void onComplete(Platform platform, int i, HashMap<String, Object> hashMap) {
+
+        }
+
+        @Override
+        public void onError(Platform platform, int i, Throwable throwable) {
+
+        }
+
+        @Override
+        public void onCancel(Platform platform, int i) {
+
+        }
+    };
 
     public void setResourceUrl(String resourceUrl) {
         mResourceUrl = resourceUrl;

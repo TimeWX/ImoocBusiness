@@ -4,6 +4,7 @@ import android.app.Application;
 
 import com.mob.MobSDK;
 
+import cn.com.megait.imoocbusiness.share.ShareManager;
 import cn.sharesdk.framework.ShareSDK;
 
 /**
@@ -29,9 +30,7 @@ public class ImoocApplication extends Application {
     }
 
     public void initShareSDK(){
-        MobSDK.init(this);
-
-
+        ShareManager.init(this);
     }
 
     private void initAdSDK(){
